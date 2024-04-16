@@ -1,6 +1,6 @@
 {
-    "name": "usermanagerapp",
-    "short_name": "usermanagerapp",
+    "name": "f_testing_template",
+    "short_name": "f_testing_template",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
