@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../content/homeuc.dart';
-import 'signup.dart';
+import 'createclient.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key, required this.email, required this.password})
@@ -83,12 +83,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                TextButton(
-                    key: const Key('ButtonLoginCreateAccount'),
-                    onPressed: () => Get.to(const SignUpPage(
-                          key: Key('SignUpPage'),
-                        )),
-                    child: const Text('Create account'))
               ],
             ),
           ),

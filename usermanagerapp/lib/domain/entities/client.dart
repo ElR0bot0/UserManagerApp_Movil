@@ -1,0 +1,9 @@
+class Client {
+  Client({
+    required this.id,
+    required this.name,
+  });
+
+  String id;
+  String name;
+}

@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
 
-import '../../domain/entities/client.dart';
-import '../controllers/client_controller.dart';
-import '../pages/content/client_detail_page.dart';
+import '../../domain/entities/us.dart';
+import '../controllers/us_controller.dart';
+import '../pages/content/us_detail_page';
 
-class ListItem extends StatelessWidget {
-  final Client client;
-  const ListItem(this.client, {Key? key}) : super(key: key);
+class ListItemUS extends StatelessWidget {
+  final US us;
+  const ListItemUS(this.us, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    logInfo("ListItem for client " + client.name.toString());
-    ClientController clientController = Get.find();
-    String id = client.id;
+    logInfo("ListItem for us " + us.name.toString());
+    USController usController = Get.find();
+    String id = us.id;
     return Center(
       child: Dismissible(
         key: UniqueKey(),
@@ -30,10 +30,10 @@ class ListItem extends StatelessWidget {
             )),
         onDismissed: (direction) {
           // Remove the item from the data source.
-          clientController.deleteClient(client.id);
+          usController.deleteUS(us.id);
         },
         child: Card(
-          key: Key('clientItem' + id),
+          key: Key('usItem' + id),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -44,15 +44,15 @@ class ListItem extends StatelessWidget {
                   //   backgroundColor: Colors.transparent,
                   //   child: ClipOval(child: Image.network(user.picture)),
                   // ),
-                  title: Text(client.name),
-                  subtitle: const Text("Cliente"),
+                  title: Text(us.name),
+                  subtitle: const Text("Support User"),
                 ),
               ),
               TextButton(
                 onPressed: () {
-                  Get.off(() => ClientDetailPage(
-                key: const Key('ClientDetailPage')
-              ), arguments: [client, client.id]);
+                  Get.off(() => USDetailPage(
+                key: const Key('USDetailPage')
+              ), arguments: [us, us.id]);
                 },
                 child: const Text("more"),
               )

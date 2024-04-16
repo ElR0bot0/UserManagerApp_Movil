@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../controllers/client_controller.dart';
+import '../../controllers/us_controller.dart';
 import '../../widgets/list_item.dart';
+import '../../widgets/list_itemus.dart';
+import '../authentication/createus.dart';
 import '../authentication/login.dart';
-import '../authentication/signup.dart';
-import 'detail.dart';
+import '../authentication/createclient.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+
 
 class HomePageUC extends StatelessWidget {
-  const HomePageUC(
+  HomePageUC(
       {Key? key, required this.loggedEmail, required this.loggedPassword})
       : super(key: key);
+  ClientController clientController = Get.find();
+  USController usController = Get.find();
   final String loggedEmail;
   final String loggedPassword;
   @override
@@ -29,30 +36,80 @@ class HomePageUC extends StatelessWidget {
               icon: const Icon(Icons.logout))
         ],
       ),
-            floatingActionButton: FloatingActionButton(
-        key: const Key('addUserButton'),
-        child: Icon(Icons.add),
-        onPressed: () {
-          Get.off(() => SignUpPage(
-                      key: const Key('SignUpPage'),
-                    ));
-        },
-      ),
+floatingActionButton: SpeedDial(
+  icon: Icons.add,
+  activeIcon: Icons.close,
+  animatedIconTheme: IconThemeData(size: 22.0),
+  overlayColor: Colors.black,
+  overlayOpacity: 0.5,
+  children: [
+    SpeedDialChild(
+      child: Icon(Icons.person),
+      backgroundColor: Color(0xFFd4cce4),
+      label: 'Client',
+      labelStyle: TextStyle(fontSize: 18.0),
+      onTap: () {
+        Get.off(() => CreateClient(
+          key: const Key('CreateClient')// puedes pasar un parámetro para identificar el tipo de usuario
+        ));
+      },
+    ),
+    SpeedDialChild(
+      child: Icon(Icons.support),
+      backgroundColor: Color(0xFFd4cce4),
+      label: 'Support user',
+      labelStyle: TextStyle(fontSize: 18.0),
+      onTap: () {
+        Get.off(() => CreateUS(
+          key: const Key('CreateUS') // puedes pasar un parámetro para identificar el tipo de usuario
+        ));
+      },
+    ),
+  ],
+)
+,
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: _listView(),
+          child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _getXlistView(),
+              SizedBox(height: 0),  // Espacio entre los dos ListView
+              _getXlistView2(),
+            ],
+          ),
+        ),
       ),
     );
   }
 
-  Widget _listView() {
-    // Aquí iría el ListView.builder para mostrar la lista de usuarios
-    return ListView.builder(
-      itemCount: 5,  // Número de elementos de ejemplo
-      itemBuilder: (context, index) {
-        // Aquí se crean y retornan los elementos del ListView
-        return ListItem();  // Aquí iría la lógica para construir un ListItem con datos del usuario
-      },
+  Widget _getXlistView2() {
+    return Obx(
+      () => ListView.builder(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: clientController.clients.length,
+        itemBuilder: (context, index) {
+          final user = clientController.clients[index];
+          return ListItem(user);
+        },
+      ),
+    );
+  }
+
+
+  Widget _getXlistView() {
+    return Obx(
+      () => ListView.builder(
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: usController.uss.length,
+        itemBuilder: (context, index) {
+          final user = usController.uss[index];
+          return ListItemUS(user);
+        },
+      ),
     );
   }
 }
