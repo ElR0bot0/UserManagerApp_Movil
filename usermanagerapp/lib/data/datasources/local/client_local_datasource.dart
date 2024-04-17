@@ -3,25 +3,24 @@ import 'package:loggy/loggy.dart';
 import '../../../domain/entities/client.dart';
 
 class ClientLocalDataSource {
-  List<Client> Clients = <Client>[];
-  static int globalId = 0;
-  addClient(Client Client) {
+  List<Client> clients = <Client>[];
+  addClient(Client client) {
     logInfo("Local data source adding Client");
-    Clients.add(Client);
+    clients.add(client);
   }
 
   Future<List<Client>> getAllClients() async {
-    logInfo("Local data returning getAllClients " + Clients.length.toString());
-    return Clients;
+    logInfo("Local data returning getAllClients " + clients.length.toString());
+    return clients;
   }
 
   Future<void> deleteClient(id) async {
-    Clients.removeWhere((element) => element.id == id);
+    clients.removeWhere((element) => element.id == id);
   }
 
-  Future<void> updateClient(Cliente) async {
-    Client oldClient = Clients.singleWhere((element) => element.id == Cliente.id);
+  Future<void> updateClient(cliente) async {
+    Client oldClient = clients.singleWhere((element) => element.id == cliente.id);
 
-    Clients[Clients.indexOf(oldClient)] = Cliente;
+    clients[clients.indexOf(oldClient)] = cliente;
   }
 }

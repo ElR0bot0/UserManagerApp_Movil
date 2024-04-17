@@ -18,22 +18,21 @@ class _CreateUSState extends State<CreateUS> {
   final emailcontroller = TextEditingController();
   final passwordcontroller = TextEditingController();
   @override
+  // ignore: override_on_non_overriding_member
   USController usController = Get.find();
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text("Create new support account"),
-        actions: [
-          IconButton(
-              key: const Key('ButtonHomeLogOff'),
-              onPressed: () {
-                Get.off(() => HomePageUC(
-                      key: const Key('HomePageUC'), loggedEmail: '', loggedPassword: '',
-                    ));
-              },
-              icon: const Icon(Icons.logout))
-        ],
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Get.off(() => HomePageUC(
+              key: const Key('HomePageUC'), loggedEmail: '', loggedPassword: '',
+            ));
+          },
+        ),
+        title: Text("Create new support account"),
       ),
       body: Center(
         child: Padding(
@@ -82,6 +81,8 @@ class _CreateUSState extends State<CreateUS> {
                       return "Enter email";
                     } else if (!value.contains('@')) {
                       return "Enter valid email address";
+                    } else {
+                      return null;
                     }
                   },
                 ),
@@ -109,11 +110,9 @@ class _CreateUSState extends State<CreateUS> {
                 OutlinedButton(
                     key: const Key('ButtonSignUpSubmit'),
                     onPressed: () async {
-                            US us = US(id: idcontroller.text, name: namecontroller.text, email: emailcontroller.text, password: passwordcontroller.text);
+                            US us = US(id: idcontroller.text, name: namecontroller.text, email: emailcontroller.text, password: passwordcontroller.text, reportquantity: 0);
                             await usController.addUS(us);
-                            Get.back();
-                          
-                        Get.to(HomePageUC(
+                        Get.off(HomePageUC(
                             key: const Key('HomePageUC'), loggedEmail: '', loggedPassword: '',)
                             );
                     },

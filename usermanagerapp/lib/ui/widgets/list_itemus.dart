@@ -15,6 +15,10 @@ class ListItemUS extends StatelessWidget {
     logInfo("ListItem for us " + us.name.toString());
     USController usController = Get.find();
     String id = us.id;
+    String desc = "Support User | # of Reports: " + us.reportquantity.toString();
+    if (us.ratings.isNotEmpty) {
+      desc = desc + "| Avg Rating: "+us.avgrating.toStringAsFixed(1) +"⭐";
+    }
     return Center(
       child: Dismissible(
         key: UniqueKey(),
@@ -45,7 +49,7 @@ class ListItemUS extends StatelessWidget {
                   //   child: ClipOval(child: Image.network(user.picture)),
                   // ),
                   title: Text(us.name),
-                  subtitle: const Text("Support User"),
+                  subtitle: Text(desc),
                 ),
               ),
               TextButton(

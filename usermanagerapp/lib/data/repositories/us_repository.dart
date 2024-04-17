@@ -6,21 +6,21 @@ import '../datasources/local/us_local_datasource.dart';
 
 class USRepository {
 
-  late USLocalDataSource _USDatatasource;
+  late USLocalDataSource _uSDatatasource;
 
   USRepository() {
     logInfo("Starting USRepository");
-    _USDatatasource = USLocalDataSource();
+    _uSDatatasource = USLocalDataSource();
   }
 
   Future<bool> addUS(US usi) async {
-    await _USDatatasource.addUS(usi);
+    await _uSDatatasource.addUS(usi);
     return Future.value(true);
   } 
 
-  Future<List<US>> getAllUSs() async => await _USDatatasource.getAllUSs();
+  Future<List<US>> getAllUSs() async => await _uSDatatasource.getAllUSs();
 
-  Future<void> deleteUS(id) async => await _USDatatasource.deleteUS(id);
+  Future<void> deleteUS(id) async => await _uSDatatasource.deleteUS(id);
 
-  Future<void> updateUS(uss) async => await _USDatatasource.updateUS(uss);
+  Future<void> updateUS(uss) async => await _uSDatatasource.updateUS(uss);
 }

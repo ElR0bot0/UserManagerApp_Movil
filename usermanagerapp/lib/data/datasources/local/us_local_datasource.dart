@@ -4,25 +4,23 @@ import '../../../domain/entities/us.dart';
 
 
 class USLocalDataSource {
-  List<US> USs = <US>[];
-  static int globalId = 0;
+  List<US> uSs = <US>[];
   addUS(US us) {
     logInfo("Local data source adding US");
-    USs.add(us);
+    uSs.add(us);
   }
 
   Future<List<US>> getAllUSs() async {
-    logInfo("Local data returning getAllUSs " + USs.length.toString());
-    return USs;
+    logInfo("Local data returning getAllUSs " + uSs.length.toString());
+    return uSs;
   }
 
   Future<void> deleteUS(id) async {
-    USs.removeWhere((element) => element.id == id);
+    uSs.removeWhere((element) => element.id == id);
   }
 
-  Future<void> updateUS(USi) async {
-    US oldUS = USs.singleWhere((element) => element.id == USi.id);
-
-    USs[USs.indexOf(oldUS)] = USi;
+  Future<void> updateUS(usi) async {
+    US oldUS = uSs.singleWhere((element) => element.id == usi.id);
+    uSs[uSs.indexOf(oldUS)] = usi;
   }
 }

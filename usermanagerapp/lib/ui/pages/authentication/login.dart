@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../content/homeuc.dart';
-import 'createclient.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key, required this.email, required this.password})
@@ -46,6 +45,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       return "Enter email";
                     } else if (!value.contains('@')) {
                       return "Enter valid email address";
+                    } else {
+                      return null;
                     }
                   },
                 ),

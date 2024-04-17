@@ -17,22 +17,21 @@ class _CreateClientPageState extends State<CreateClient> {
   final idcontroller = TextEditingController();
   final namecontroller = TextEditingController();
   @override
+  // ignore: override_on_non_overriding_member
   ClientController clientController = Get.find();
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: const Text("Create new client account"),
-        actions: [
-          IconButton(
-              key: const Key('ButtonHomeLogOff'),
-              onPressed: () {
-                Get.off(() => HomePageUC(
-                      key: const Key('HomePageUC'), loggedEmail: '', loggedPassword: '',
-                    ));
-              },
-              icon: const Icon(Icons.logout))
-        ],
+       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Get.off(() => HomePageUC(
+              key: const Key('HomePageUC'), loggedEmail: '', loggedPassword: '',
+            ));
+          },
+        ),
+        title: Text("Create new client account"),
       ),
       body: Center(
         child: Padding(
@@ -78,11 +77,9 @@ class _CreateClientPageState extends State<CreateClient> {
                 OutlinedButton(
                     key: const Key('ButtonSignUpSubmit'),
                     onPressed: () async {
-                            Client client = Client(id: idcontroller.text, name: namecontroller.text);
+                            Client client = Client(id: idcontroller.text, name: namecontroller.text, reportquantity: 0);
                             await clientController.addClient(client);
-                            Get.back();
-                          
-                        Get.to(HomePageUC(
+                        Get.off(HomePageUC(
                             key: const Key('HomePageUC'), loggedEmail: '', loggedPassword: '',)
                             );
                     },

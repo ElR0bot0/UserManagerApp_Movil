@@ -13,11 +13,18 @@ class ClientDetailPage extends StatefulWidget {
 }
 
 class _ClientDetailPageState extends State<ClientDetailPage> {
-  Client client = Get.arguments[0];
-
+  late Client client;
   final controllerName = TextEditingController();
   final controllerId = TextEditingController();
 
+    @override
+    void initState() {
+      super.initState();
+      client = Get.arguments[0]; // Inicializar us con los argumentos de Get.arguments
+      controllerName.text = client.name;
+      controllerId.text = client.id;
+  }
+  
   @override
   Widget build(BuildContext context) {
     ClientController clientController = Get.find();
@@ -25,17 +32,15 @@ class _ClientDetailPageState extends State<ClientDetailPage> {
     controllerId.text = client.id;
     return Scaffold(
       appBar: AppBar(
-        title: Text(client.name),
-        actions: [
-          IconButton(
-              key: const Key('ButtonHomeLogOff'),
-              onPressed: () {
-                Get.off(() => HomePageUC(
-                      key: const Key('HomePageUC'), loggedEmail: '', loggedPassword: '',
-                    ));
-              },
-              icon: const Icon(Icons.logout))
-        ],
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Get.off(() => HomePageUC(
+              key: const Key('HomePageUC'), loggedEmail: '', loggedPassword: '',
+            ));
+          },
+        ),
+        title: Text(client.name), // Ahora us.name debería funcionar correctamente
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

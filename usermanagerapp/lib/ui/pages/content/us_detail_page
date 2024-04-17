@@ -13,7 +13,7 @@ class USDetailPage extends StatefulWidget {
 }
 
 class _USDetailPageState extends State<USDetailPage> {
-  US us = Get.arguments[0];
+  late US us; // Declarar como late para inicializar en initState
 
   final controllerName = TextEditingController();
   final controllerId = TextEditingController();
@@ -21,25 +21,29 @@ class _USDetailPageState extends State<USDetailPage> {
   final controllerpassword = TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
-    USController usController = Get.find();
+  void initState() {
+    super.initState();
+    us = Get.arguments[0] as US; // Inicializar us con los argumentos de Get.arguments
     controllerName.text = us.name;
     controllerId.text = us.id;
     controlleremail.text = us.email;
     controllerpassword.text = us.password;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    USController usController = Get.find();
     return Scaffold(
       appBar: AppBar(
-        title: Text(us.name),
-        actions: [
-          IconButton(
-              key: const Key('ButtonHomeLogOff'),
-              onPressed: () {
-                Get.off(() => HomePageUC(
-                      key: const Key('HomePageUC'), loggedEmail: '', loggedPassword: '',
-                    ));
-              },
-              icon: const Icon(Icons.logout))
-        ],
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Get.off(() => HomePageUC(
+              key: const Key('HomePageUC'), loggedEmail: '', loggedPassword: '',
+            ));
+          },
+        ),
+        title: Text(us.name), // Ahora us.name debería funcionar correctamente
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -49,36 +53,40 @@ class _USDetailPageState extends State<USDetailPage> {
               height: 20,
             ),
             TextField(
-                controller: controllerName,
-                decoration: const InputDecoration(
-                  labelText: 'Name',
-                )),
+              controller: controllerName,
+              decoration: const InputDecoration(
+                labelText: 'Name',
+              ),
+            ),
             const SizedBox(
               height: 20,
             ),
             TextField(
-                key: const Key('TextFieldId'),
-                controller: controllerId,
-                decoration: const InputDecoration(
-                  labelText: 'Id',
-                )),
+              key: const Key('TextFieldId'),
+              controller: controllerId,
+              decoration: const InputDecoration(
+                labelText: 'Id',
+              ),
+            ),
             const SizedBox(
               height: 20,
             ),
             TextField(
-                controller: controlleremail,
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                )),
+              controller: controlleremail,
+              decoration: const InputDecoration(
+                labelText: 'Email',
+              ),
+            ),
             const SizedBox(
               height: 20,
             ),
             TextField(
-                controller: controllerpassword,
-                decoration: const InputDecoration(
-                  labelText: 'Password',
-                ),
-                obscureText: true),
+              controller: controllerpassword,
+              decoration: const InputDecoration(
+                labelText: 'Password',
+              ),
+              obscureText: true,
+            ),
             const SizedBox(
               height: 20,
             ),
@@ -88,23 +96,25 @@ class _USDetailPageState extends State<USDetailPage> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Expanded(
-                      flex: 2,
-                      child: ElevatedButton(
-                          onPressed: () async {
-                            US usM = us;
-                            usM.name = controllerName.text;
-                            usM.id = controllerId.text;
-                            usM.email = controlleremail.text;
-                            usM.password = controllerpassword.text;
-                            await usController.updateUS(usM);
-                             Get.off(() => HomePageUC(
-                      key: const Key('HomePageUC'), loggedEmail: '', loggedPassword: '',
-                    ));
-                          },
-                          child: const Text("Save")))
+                    flex: 2,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        US usM = us;
+                        usM.name = controllerName.text;
+                        usM.id = controllerId.text;
+                        usM.email = controlleremail.text;
+                        usM.password = controllerpassword.text;
+                        await usController.updateUS(usM);
+                        Get.off(() => HomePageUC(
+                          key: const Key('HomePageUC'), loggedEmail: '', loggedPassword: '',
+                        ));
+                      },
+                      child: const Text("Save"),
+                    ),
+                  ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

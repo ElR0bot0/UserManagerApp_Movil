@@ -1,4 +1,3 @@
-import 'dart:html';
 import 'package:f_testing_template/domain/entities/client.dart';
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';

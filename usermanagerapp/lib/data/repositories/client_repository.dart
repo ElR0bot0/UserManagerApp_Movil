@@ -5,21 +5,21 @@ import '../datasources/local/client_local_datasource.dart';
 
 class ClientRepository {
 
-  late ClientLocalDataSource _ClientDatatasource;
+  late ClientLocalDataSource _clientDatatasource;
 
   ClientRepository() {
     logInfo("Starting ClientRepository");
-    _ClientDatatasource = ClientLocalDataSource();
+    _clientDatatasource = ClientLocalDataSource();
   }
 
   Future<bool> addClient(Client client) async {
-    await _ClientDatatasource.addClient(client);
+    await _clientDatatasource.addClient(client);
     return Future.value(true);
   } 
 
-  Future<List<Client>> getAllClients() async => await _ClientDatatasource.getAllClients();
+  Future<List<Client>> getAllClients() async => await _clientDatatasource.getAllClients();
 
-  Future<void> deleteClient(id) async => await _ClientDatatasource.deleteClient(id);
+  Future<void> deleteClient(id) async => await _clientDatatasource.deleteClient(id);
 
-  Future<void> updateClient(Client) async => await _ClientDatatasource.updateClient(Client);
+  Future<void> updateClient(client) async => await _clientDatatasource.updateClient(client);
 }

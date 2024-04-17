@@ -1,4 +1,3 @@
-import 'dart:html';
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
 import '../../domain/entities/us.dart';
