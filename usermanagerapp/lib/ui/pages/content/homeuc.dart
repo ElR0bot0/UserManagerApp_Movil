@@ -10,14 +10,22 @@ import '../authentication/createclient.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 
-class HomePageUC extends StatelessWidget {
+class HomePageUC extends StatefulWidget {
   HomePageUC(
       {Key? key, required this.loggedEmail, required this.loggedPassword})
       : super(key: key);
-  ClientController clientController = Get.find();
-  USController usController = Get.find();
   final String loggedEmail;
   final String loggedPassword;
+
+  @override
+  State<HomePageUC> createState() => _HomePageUCState();
+}
+
+class _HomePageUCState extends State<HomePageUC> {
+  ClientController clientController = Get.find();
+
+  USController usController = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,8 +37,8 @@ class HomePageUC extends StatelessWidget {
               onPressed: () {
                 Get.off(() => LoginScreen(
                       key: const Key('LoginScreen'),
-                      email: loggedEmail,
-                      password: loggedPassword,
+                      email: widget.loggedEmail,
+                      password: widget.loggedPassword,
                     ));
               },
               icon: const Icon(Icons.logout))
@@ -97,7 +105,6 @@ floatingActionButton: SpeedDial(
       ),
     );
   }
-
 
   Widget _getXlistView() {
     return Obx(

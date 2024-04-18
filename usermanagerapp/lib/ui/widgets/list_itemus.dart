@@ -5,6 +5,7 @@ import 'package:loggy/loggy.dart';
 import '../../domain/entities/us.dart';
 import '../controllers/us_controller.dart';
 import '../pages/content/us_detail_page';
+import '../pages/content/usreports.dart';
 
 class ListItemUS extends StatelessWidget {
   final US us;
@@ -52,13 +53,21 @@ class ListItemUS extends StatelessWidget {
                   subtitle: Text(desc),
                 ),
               ),
+                            TextButton(
+                onPressed: () {
+                  Get.off(() => USReports(
+                key: const Key('USReports'), selectedUS: us,
+              ));
+                },
+                child: const Text("Reports"),
+              ),
               TextButton(
                 onPressed: () {
                   Get.off(() => USDetailPage(
                 key: const Key('USDetailPage')
               ), arguments: [us, us.id]);
                 },
-                child: const Text("more"),
+                child: const Text("Edit"),
               )
             ],
           ),

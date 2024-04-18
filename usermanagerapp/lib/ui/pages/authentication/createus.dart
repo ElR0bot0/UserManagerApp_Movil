@@ -1,5 +1,8 @@
+import 'package:f_testing_template/domain/entities/client.dart';
+import 'package:f_testing_template/ui/controllers/report_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../domain/entities/report.dart';
 import '../../../domain/entities/us.dart';
 import '../../controllers/us_controller.dart';
 import '../content/homeuc.dart';
@@ -20,6 +23,7 @@ class _CreateUSState extends State<CreateUS> {
   @override
   // ignore: override_on_non_overriding_member
   USController usController = Get.find();
+  ReportController reportController = Get.find();
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -112,6 +116,11 @@ class _CreateUSState extends State<CreateUS> {
                     onPressed: () async {
                             US us = US(id: idcontroller.text, name: namecontroller.text, email: emailcontroller.text, password: passwordcontroller.text, reportquantity: 0);
                             await usController.addUS(us);
+                              Client client = Client(id: '22', name: 'try', reportquantity: 0);
+                              Report report = Report(id: 132, client: client, us: us, problem: 'Problem', duration: '0', startDate: DateTime.now(), desc: 'desc');
+                              us.reportquantity++;
+                              await usController.updateUS(us);
+                              await reportController.addReport(report);
                         Get.off(HomePageUC(
                             key: const Key('HomePageUC'), loggedEmail: '', loggedPassword: '',)
                             );

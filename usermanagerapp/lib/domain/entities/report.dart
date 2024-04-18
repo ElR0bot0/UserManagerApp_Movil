@@ -10,7 +10,7 @@ class Report {
     required this.desc,
     required this.duration,
     this.rating,
-    required this.startDate,
+    required this.startDate
   });
 
   int? id;

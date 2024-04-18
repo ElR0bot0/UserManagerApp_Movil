@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
 
-import '../../domain/entities/client.dart';
-import '../controllers/client_controller.dart';
-import '../pages/content/client_detail_page.dart';
-import '../pages/content/clientreports.dart';
+import '../../domain/entities/report.dart';
+import '../controllers/report_controller.dart';
+import '../pages/content/report_detail_page.dart';
 
-class ListItem extends StatelessWidget {
-  final Client client;
-  const ListItem(this.client, {Key? key}) : super(key: key);
-
+class ListItemReport extends StatelessWidget {
+  final Report report;
+  const ListItemReport(this.report, {Key? key}) : super(key: key);
+  
   @override
   Widget build(BuildContext context) {
-    logInfo("ListItem for client " + client.name.toString());
-    ClientController clientController = Get.find();
-    String id = client.id;
+    String desc = "Support User: " + report.us.name + " | Client: " + report.client.name;
+    logInfo("ListItem for report " + report.problem.toString());
+    ReportController reportController = Get.find();
+    String? id = report.id.toString();
     return Center(
       child: Dismissible(
         key: UniqueKey(),
@@ -31,10 +31,10 @@ class ListItem extends StatelessWidget {
             )),
         onDismissed: (direction) {
           // Remove the item from the data source.
-          clientController.deleteClient(client.id);
+          reportController.deleteReport(report.id);
         },
         child: Card(
-          key: Key('clientItem' + id),
+          key: Key('reportItem' + id),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -45,25 +45,17 @@ class ListItem extends StatelessWidget {
                   //   backgroundColor: Colors.transparent,
                   //   child: ClipOval(child: Image.network(user.picture)),
                   // ),
-                  title: Text(client.name),
-                  subtitle: const Text("Client"),
+                  title: Text(report.problem),
+                  subtitle:  Text(desc),
                 ),
               ),
               TextButton(
                 onPressed: () {
-                  Get.off(() => ClientReports(
-                key: const Key('ClientReports'), selectedClient: client,
-              ));
+                  Get.to(() => ReportDetailPage(
+                key: const Key('ReportDetailPage')
+              ), arguments: [report, report.id]);
                 },
-                child: const Text("Reports"),
-              ),
-              TextButton(
-                onPressed: () {
-                  Get.off(() => ClientDetailPage(
-                key: const Key('ClientDetailPage')
-              ), arguments: [client, client.id]);
-                },
-                child: const Text("Edit"),
+                child: const Text("more"),
               )
             ],
           ),

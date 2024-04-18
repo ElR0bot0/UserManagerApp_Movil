@@ -17,8 +17,6 @@ class ReportLocalDataSource {
     globalId++;
     logInfo("Local data source adding Report");
     reports.add(report);
-    report.us.reportquantity++;
-    usLocalDataSource.updateUS(report.us);
   }
 
   Future<List<Report>> getAllReports() async {
