@@ -17,9 +17,9 @@ class ListItemUS extends StatelessWidget {
     USController usController = Get.find();
     String id = us.id;
     String desc = "Support User | # of Reports: " + us.reportquantity.toString();
-    if (us.ratings.isNotEmpty) {
-      desc = desc + "| Avg Rating: "+us.avgrating.toStringAsFixed(1) +"⭐";
-    }
+if (us.ratings != null) {
+  desc = desc + " | Avg Rating: " + us.avgrating.toStringAsFixed(1) + " ";
+}
     return Center(
       child: Dismissible(
         key: UniqueKey(),
@@ -50,7 +50,24 @@ class ListItemUS extends StatelessWidget {
                   //   child: ClipOval(child: Image.network(user.picture)),
                   // ),
                   title: Text(us.name),
-                  subtitle: Text(desc),
+                  subtitle: RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: desc,
+                          style: TextStyle(color: Colors.black), // Establece el estilo del texto
+                        ),
+                        if (us.ratings != null)
+                          WidgetSpan(
+                            child: Icon(
+                              Icons.star,
+                              color: Colors.yellow,
+                              size: 20, // Ajusta el tamaño del ícono según lo necesites
+                            ), // Muestra el ícono de la estrella
+                          ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
                             TextButton(

@@ -31,13 +31,5 @@ class ReportLocalDataSource {
   Future<void> rateReport(reporte) async {
     Report oldReport = reports.singleWhere((element) => element.id == reporte.id);
     reports[reports.indexOf(oldReport)] = reporte;
-    reporte.us.ratings.add(reporte.rating);
-    int suma = 0;
-    for(int rating in reporte.us.ratings){
-      suma += rating;
-    }
-    double avg = suma / reporte.us.ratings.length;
-    reporte.us.avgrating = avg;
-    usLocalDataSource.updateUS(reporte.us);
   }
 }

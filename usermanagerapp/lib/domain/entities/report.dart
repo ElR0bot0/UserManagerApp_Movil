@@ -9,7 +9,7 @@ class Report {
     required this.problem,
     required this.desc,
     required this.duration,
-    this.rating,
+    required this.rating,
     required this.startDate
   });
 
@@ -18,7 +18,7 @@ class Report {
   US us;
   String problem;
   String desc;
-  int? rating;
+  int rating;
   String duration;
   DateTime startDate;
 }

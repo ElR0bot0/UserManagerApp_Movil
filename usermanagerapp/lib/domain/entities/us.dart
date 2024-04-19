@@ -5,7 +5,7 @@ class US {
     required this.email,
     required this.password,
     required this.reportquantity,
-    this.ratings = const[],
+    this.ratings,
     this.avgrating = 0.0,
   });
 
@@ -14,6 +14,6 @@ class US {
   String email;
   String password;
   int reportquantity;
-  List<int> ratings;
+  List<int>? ratings;
   double avgrating;
 }
