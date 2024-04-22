@@ -44,7 +44,7 @@ class _HomePageUSState extends State<HomePageUS> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Coordinator Menu"),
+        title: const Text("Support Menu"),
         actions: [
           IconButton(
             key: const Key('ButtonHomeLogOff'),
