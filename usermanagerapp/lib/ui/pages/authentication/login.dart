@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../content/homeuc.dart';
+import '../content/homeus.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key, required this.email, required this.password})
@@ -17,6 +18,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  bool useHomePageUS = false; // State variable to track the toggle state
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,16 +74,42 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(
                   height: 20,
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Use HomePageUS'),
+                    Switch(
+                      value: useHomePageUS,
+                      onChanged: (value) {
+                        setState(() {
+                          useHomePageUS = value;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
                 OutlinedButton(
-                    key: const Key('ButtonLoginSubmit'),
-                    onPressed: () {
-                          Get.offAll(HomePageUC(
-                            key: const Key('HomePage'),
-                            loggedEmail: _emailController.text,
-                            loggedPassword: _passwordController.text,
-                          ));
-                    },
-                    child: const Text("Submit")),
+                  key: const Key('ButtonLoginSubmit'),
+                  onPressed: () {
+                    if (useHomePageUS) {
+                      Get.offAll(HomePageUS(
+                        key: const Key('HomePage'),
+                        loggedEmail: _emailController.text,
+                        loggedPassword: _passwordController.text,
+                      ));
+                    } else {
+                      Get.offAll(HomePageUC(
+                        key: const Key('HomePage'),
+                        loggedEmail: _emailController.text,
+                        loggedPassword: _passwordController.text,
+                      ));
+                    }
+                  },
+                  child: const Text("Submit"),
+                ),
                 const SizedBox(
                   height: 20,
                 ),
