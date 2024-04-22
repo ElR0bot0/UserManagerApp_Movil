@@ -4,7 +4,7 @@ import 'package:loggy/loggy.dart';
 
 import '../../domain/entities/us.dart';
 import '../controllers/us_controller.dart';
-import '../pages/content/us_detail_page';
+import '../pages/content/us_detail_page.dart';
 import '../pages/content/usreports.dart';
 
 class ListItemUS extends StatelessWidget {

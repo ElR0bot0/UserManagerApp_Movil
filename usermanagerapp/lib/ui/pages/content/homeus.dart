@@ -4,9 +4,7 @@ import '../../controllers/client_controller.dart';
 import '../../controllers/us_controller.dart';
 import '../../widgets/list_item.dart';
 import '../../widgets/list_itemus.dart';
-import '../authentication/createus.dart';
 import '../authentication/login.dart';
-import '../authentication/createclient.dart';
 
 class Report {
   final String title;

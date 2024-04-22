@@ -1,3 +1,5 @@
+import 'package:f_testing_template/data/repositories/uc_repository.dart';
+import 'package:f_testing_template/domain/use_case/ucs.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'data/repositories/client_repository.dart';
@@ -8,6 +10,7 @@ import 'domain/use_case/reports.dart';
 import 'domain/use_case/uss.dart';
 import 'ui/controllers/client_controller.dart';
 import 'ui/controllers/report_controller.dart';
+import 'ui/controllers/uc_controller.dart';
 import 'ui/controllers/us_controller.dart';
 import 'ui/pages/authentication/login.dart';
 
@@ -18,9 +21,12 @@ void main() {
   Get.put(USRepository());  
   Get.put(USs(Get.find<USRepository>()));  
   Get.put<USController>(USController(usUseCase: Get.find<USs>())); 
-    Get.put(ReportRepository());  
+  Get.put(ReportRepository());  
   Get.put(Reports(Get.find<ReportRepository>()));  
-  Get.put<ReportController>(ReportController(reportUseCase: Get.find<Reports>()));   
+  Get.put<ReportController>(ReportController(reportUseCase: Get.find<Reports>()));
+  Get.put(UCRepository());  
+  Get.put(UCs(Get.find<UCRepository>()));  
+  Get.put<UCController>(UCController(ucUseCase: Get.find<UCs>()));      
   runApp(MyApp());
 }
 

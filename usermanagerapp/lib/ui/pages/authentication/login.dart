@@ -1,3 +1,4 @@
+import 'package:f_testing_template/ui/controllers/uc_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../content/homeuc.dart';
@@ -22,6 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    UCController ucController = Get.find();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Center(
@@ -74,34 +76,21 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Use HomePageUS'),
-                    Switch(
-                      value: useHomePageUS,
-                      onChanged: (value) {
-                        setState(() {
-                          useHomePageUS = value;
-                        });
-                      },
-                    ),
-                  ],
-                ),
                 const SizedBox(
                   height: 20,
                 ),
                 OutlinedButton(
                   key: const Key('ButtonLoginSubmit'),
-                  onPressed: () {
-                    if (useHomePageUS) {
-                      Get.offAll(HomePageUS(
+                  onPressed: () async {
+                    bool isuc = await ucController.authenticateUC(_emailController.text, _passwordController.text);
+                    if (isuc) {
+                      Get.offAll(HomePageUC(
                         key: const Key('HomePage'),
                         loggedEmail: _emailController.text,
                         loggedPassword: _passwordController.text,
                       ));
                     } else {
-                      Get.offAll(HomePageUC(
+                      Get.offAll(HomePageUS(
                         key: const Key('HomePage'),
                         loggedEmail: _emailController.text,
                         loggedPassword: _passwordController.text,
