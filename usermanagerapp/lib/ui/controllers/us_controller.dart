@@ -40,8 +40,26 @@ class USController extends GetxController {
     await getAllUSs();
   }
 
-    Future<bool> authenticateUS(String email, String password) async {
-    logInfo("USController -> add ucer");
+  Future<bool> authenticateUS(String email, String password) async {
+    logInfo("USController -> add user");
     return await usUseCase.authenticateUS(email, password);
+  }
+
+  Future<US?> getUSById(String id) async {
+    try {
+      return await usUseCase.getUSById(id);
+    } catch (error) {
+      logError('Error getting US by ID in USController: $error');
+      return null;
+    }
+  }
+
+  Future<US?> getUSByEmail(String email) async {
+    try {
+      return await usUseCase.getUSByEmail(email);
+    } catch (error) {
+      logError('Error getting US by Email in USController: $error');
+      return null;
+    }
   }
 }

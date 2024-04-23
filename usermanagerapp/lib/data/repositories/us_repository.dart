@@ -46,4 +46,25 @@ class USRepository {
   }
 
   Future<bool> authenticateUS(String email, String password) async => await _uSDatatasource.authenticateUS(email, password);
+
+    Future<US?> getUSById(String id) async {
+    try {
+      return await _uSDatatasource.getUSById(id);
+    } catch (error) {
+      logError('Error getting US by ID in repository: $error');
+      return null;
+    }
+  }
+
+  Future<US?> getUSByEmail(String email) async {
+    try {
+      return await _uSDatatasource.getUSByEmail(email);
+    } catch (error) {
+      logError('Error getting US by Email in repository: $error');
+      return null;
+    }
+  }
+
 }
+
+

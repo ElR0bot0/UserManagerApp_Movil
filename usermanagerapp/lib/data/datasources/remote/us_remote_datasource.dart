@@ -108,4 +108,45 @@ Future<List<US>> getAllUSs() async {
       return false;
     }
   }
+  Future<US?> getUSById(String id) async {
+    try {
+      final response = await http.get(Uri.parse('$baseUrl/$id'));
+
+      logInfo('GET US by ID - Response Status Code: ${response.statusCode}');
+      logInfo('GET US by ID - Response Body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        dynamic jsonResponse = jsonDecode(response.body);
+        US? us = jsonResponse != null ? US.fromJson(jsonResponse) : null;
+        logInfo('GET US by ID - Decoded US: $us');
+        return us;
+      } else {
+        throw Exception('Failed to get US by ID. Status code: ${response.statusCode}, Body: ${response.body}');
+      }
+    } catch (error) {
+      logError('Error getting US by ID: $error');
+      throw Exception('Error getting US by ID: $error');
+    }
+  }
+
+  Future<US?> getUSByEmail(String email) async {
+    try {
+      final response = await http.get(Uri.parse('$baseUrl?email=$email'));
+
+      logInfo('GET US by Email - Response Status Code: ${response.statusCode}');
+      logInfo('GET US by Email - Response Body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        dynamic jsonResponse = jsonDecode(response.body);
+        US? us = jsonResponse.isNotEmpty ? US.fromJson(jsonResponse[0]) : null;
+        logInfo('GET US by Email - Decoded US: $us');
+        return us;
+      } else {
+        throw Exception('Failed to get US by Email. Status code: ${response.statusCode}, Body: ${response.body}');
+      }
+    } catch (error) {
+      logError('Error getting US by Email: $error');
+      throw Exception('Error getting US by Email: $error');
+    }
+  }
 }

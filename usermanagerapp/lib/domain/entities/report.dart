@@ -1,6 +1,3 @@
-import 'package:f_testing_template/domain/entities/client.dart';
-import 'package:f_testing_template/domain/entities/us.dart';
-
 class Report {
   Report({
     this.id,

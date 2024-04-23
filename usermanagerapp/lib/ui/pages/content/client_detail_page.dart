@@ -40,7 +40,7 @@ class _ClientDetailPageState extends State<ClientDetailPage> {
             ));
           },
         ),
-        title: Text(client.name), // Ahora us.name debería funcionar correctamente
+        title: Text(client.name), 
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
