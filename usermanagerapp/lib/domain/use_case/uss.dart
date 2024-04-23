@@ -10,4 +10,5 @@ class USs {
   Future<List<US>> getAllUSs() async => await _repository.getAllUSs();
   Future<void> deleteUS(id) async => await _repository.deleteUS(id);
   Future<void> updateUS(usi) async => await _repository.updateUS(usi);
+  Future<bool> authenticateUS(String email, String password) async => await _repository.authenticateUS(email, password);
 }

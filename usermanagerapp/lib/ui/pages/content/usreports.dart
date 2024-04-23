@@ -59,7 +59,7 @@ class _USReportsState extends State<USReports> {
   }
 
 Widget _getXlistView() {
-  final filteredReports = reportController.reports.where((report) => report.us == _selectedUS).toList();
+  final filteredReports = reportController.reports.where((report) => report.usid.toString() == _selectedUS.id).toList();
 
   if (filteredReports.isEmpty) {
     return Center(

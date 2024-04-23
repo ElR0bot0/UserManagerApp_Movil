@@ -59,7 +59,7 @@ class _ClientReportsState extends State<ClientReports> {
   }
 
 Widget _getXlistView() {
-  final filteredReports = reportController.reports.where((report) => report.client == _selectedClient).toList();
+  final filteredReports = reportController.reports.where((report) => report.clientid.toString() == _selectedClient.id).toList();
 
   if (filteredReports.isEmpty) {
     return Center(

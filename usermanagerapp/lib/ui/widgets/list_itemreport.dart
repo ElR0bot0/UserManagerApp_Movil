@@ -12,7 +12,7 @@ class ListItemReport extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    String desc = "Support User: " + report.us.name + " | Client: " + report.client.name;
+    String desc = "Support User: " + report.usid.toString() + " | Client: " + report.clientid.toString(); //name
     logInfo("ListItem for report " + report.problem.toString());
     ReportController reportController = Get.find();
     String? id = report.id.toString();

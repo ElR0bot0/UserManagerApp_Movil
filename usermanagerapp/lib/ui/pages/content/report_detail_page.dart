@@ -26,8 +26,8 @@ class _ReportDetailPageState extends State<ReportDetailPage> {
   void initState() {
     super.initState();
     report = Get.arguments[0];
-    controllerClient.text = report.client.name;
-    controllerUS.text = report.us.name;
+    controllerClient.text = report.clientid.toString(); //name
+    controllerUS.text = report.usid.toString(); //name
     controllerProblem.text = report.problem;
     controllerDesc.text = report.desc;
     controllerDuration.text = report.duration;
@@ -179,7 +179,7 @@ class _ReportDetailPageState extends State<ReportDetailPage> {
                      Report newreport = report;
                      newreport.rating = rating;
                      reportController.rateReport(newreport);
-                     US newus = report.us;
+                     US newus = new US(email: 'a', id: '1', name: 'd', password: 'e', reportquantity: 1);
                      if(newus.ratings == null) {
                         newus.ratings = [rating];
                      } else {

@@ -24,7 +24,6 @@ class USController extends GetxController {
 
   Future<void> getAllUSs() async {
     var list = await usUseCase.getAllUSs();
-    logInfo("USController -> getAllUsers got " + list.length.toString());
     _uss.value = list;
     _uss.refresh();
   }
@@ -39,5 +38,10 @@ class USController extends GetxController {
     logInfo("USController -> updateUser user ${us.id}");
     await usUseCase.updateUS(us);
     await getAllUSs();
+  }
+
+    Future<bool> authenticateUS(String email, String password) async {
+    logInfo("USController -> add ucer");
+    return await usUseCase.authenticateUS(email, password);
   }
 }

@@ -1,6 +1,7 @@
 import 'package:f_testing_template/ui/controllers/uc_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../controllers/us_controller.dart';
 import '../content/homeuc.dart';
 import '../content/homeus.dart';
 
@@ -24,6 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     UCController ucController = Get.find();
+    USController usController = Get.find();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Center(
@@ -83,6 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   key: const Key('ButtonLoginSubmit'),
                   onPressed: () async {
                     bool isuc = await ucController.authenticateUC(_emailController.text, _passwordController.text);
+                    bool isus = await usController.authenticateUS(_emailController.text, _passwordController.text);
                     if (isuc) {
                       Get.offAll(HomePageUC(
                         key: const Key('HomePage'),
@@ -90,11 +93,19 @@ class _LoginScreenState extends State<LoginScreen> {
                         loggedPassword: _passwordController.text,
                       ));
                     } else {
-                      Get.offAll(HomePageUS(
-                        key: const Key('HomePage'),
-                        loggedEmail: _emailController.text,
-                        loggedPassword: _passwordController.text,
-                      ));
+                      if(isus){
+                        Get.offAll(HomePageUS(
+                          key: const Key('HomePage'),
+                          loggedEmail: _emailController.text,
+                          loggedPassword: _passwordController.text,
+                        ));
+                      } else { // Mostrar un mensaje de error al usuario
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Email o contraseña incorrectos'),
+                          ),
+                        );
+                      }
                     }
                   },
                   child: const Text("Submit"),
