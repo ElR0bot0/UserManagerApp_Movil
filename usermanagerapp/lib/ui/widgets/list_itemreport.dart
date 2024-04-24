@@ -2,7 +2,6 @@ import 'package:f_testing_template/ui/controllers/us_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
-import '../../domain/entities/client.dart';
 import '../../domain/entities/report.dart';
 import '../../domain/entities/us.dart';
 import '../controllers/report_controller.dart';
@@ -46,7 +45,7 @@ class ListItemReport extends StatelessWidget {
                 reportController.deleteReport(report.id);
               },
               child: Card(
-                key: Key('reportItem' + id!),
+                key: Key('reportItem' + id),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[

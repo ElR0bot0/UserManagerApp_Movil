@@ -1,12 +1,35 @@
 import 'package:get/get.dart';
+
 import '../../data/repositories/client_repository.dart';
 import '../entities/client.dart';
 
 class Clientss {
   final ClientRepository _repository = Get.find();
   Clientss(find);
-  Future<void> addClient(client) async => await _repository.addClient(client);
+
+  Future<void> addClient(clienti) async => await _repository.addClient(clienti);
+
   Future<List<Client>> getAllClients() async => await _repository.getAllClients();
+
   Future<void> deleteClient(id) async => await _repository.deleteClient(id);
-  Future<void> updateClient(client) async => await _repository.updateClient(client);
+
+  Future<void> updateClient(clienti) async => await _repository.updateClient(clienti);
+
+  Future<Client?> getClientById(String id) async {
+    try {
+      return await _repository.getClientById(id);
+    } catch (error) {
+      print('Error getting Client by ID in Clients class: $error');
+      return null;
+    }
+  }
+
+  Future<Client?> getClientByEmail(String email) async {
+    try {
+      return await _repository.getClientByEmail(email);
+    } catch (error) {
+      print('Error getting Client by Email in Clients class: $error');
+      return null;
+    }
+  }
 }

@@ -36,7 +36,6 @@ class _ReportDetailPageState extends State<ReportDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    ReportController reportController = Get.find();
     USController usController = Get.find();
 
     return FutureBuilder<US?>(

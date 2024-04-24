@@ -116,7 +116,7 @@ class _CreateUSState extends State<CreateUS> {
                     onPressed: () async {
                             US us = US(id: idcontroller.text, name: namecontroller.text, email: emailcontroller.text, password: passwordcontroller.text, reportquantity: 0);
                             await usController.addUS(us);
-                              Client client = Client(id: '22', name: 'try', reportquantity: 0);
+                              Client client = Client(id: '22', name: 'try');
                               Report report = Report(id: 132, clientid: int.parse(client.id), usid: int.parse(us.id), problem: 'Problem', duration: '0', startDate: DateTime.now(), desc: 'desc', rating: 0);
                               us.reportquantity++;
                               await usController.updateUS(us);

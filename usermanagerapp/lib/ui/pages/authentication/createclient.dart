@@ -77,7 +77,7 @@ class _CreateClientPageState extends State<CreateClient> {
                 OutlinedButton(
                     key: const Key('ButtonSignUpSubmit'),
                     onPressed: () async {
-                            Client client = Client(id: idcontroller.text, name: namecontroller.text, reportquantity: 0);
+                            Client client = Client(id: idcontroller.text, name: namecontroller.text);
                             await clientController.addClient(client);
                         Get.off(HomePageUC(
                             key: const Key('HomePageUC'), loggedEmail: '', loggedPassword: '',)

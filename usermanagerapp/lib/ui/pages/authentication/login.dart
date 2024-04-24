@@ -93,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         loggedPassword: _passwordController.text,
                       ));
                     } else {
-                      if(isus){
+                      if(isus){                       
                         Get.offAll(HomePageUS(
                           key: const Key('HomePage'),
                           loggedEmail: _emailController.text,
