@@ -22,8 +22,8 @@ void main() {
   Get.put(USs(Get.find<USRepository>()));  
   Get.put<USController>(USController(usUseCase: Get.find<USs>())); 
   Get.put(ReportRepository());  
-  Get.put(Reports(Get.find<ReportRepository>()));  
-  Get.put<ReportController>(ReportController(reportUseCase: Get.find<Reports>()));
+  Get.put(Reportss(Get.find<ReportRepository>()));  
+  Get.put<ReportController>(ReportController(reportUseCase: Get.find<Reportss>()));
   Get.put(UCRepository());  
   Get.put(UCs(Get.find<UCRepository>()));  
   Get.put<UCController>(UCController(ucUseCase: Get.find<UCs>()));      

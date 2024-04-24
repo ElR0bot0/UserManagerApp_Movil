@@ -1,25 +1,47 @@
 import 'package:loggy/loggy.dart';
-
 import '../../domain/entities/report.dart';
-import '../datasources/local/report_local_datasource.dart';
+import '../datasources/remote/report_remote_datasource.dart';
 
 class ReportRepository {
-
-  late ReportLocalDataSource _reportDatatasource;
+  late ReportRemoteDataSource _ReportDatatasource;
 
   ReportRepository() {
     logInfo("Starting ReportRepository");
-    _reportDatatasource = ReportLocalDataSource();
+    _ReportDatatasource = ReportRemoteDataSource();
   }
 
-  Future<bool> addReport(Report report) async {
-    await _reportDatatasource.addReport(report);
-    return Future.value(true);
-  } 
+  Future<bool> addReport(Report reporti) async {
+    try {
+      await _ReportDatatasource.addReport(reporti);
+      return true;
+    } catch (error) {
+      logError('Error adding Report in repository: $error');
+      return false;
+    }
+  }
 
-  Future<List<Report>> getAllReports() async => await _reportDatatasource.getAllReports();
+  Future<List<Report>> getAllReports() async {
+    try {
+      return await _ReportDatatasource.getAllReports();
+    } catch (error) {
+      logError('Error getting all Reports in repository: $error');
+      return [];
+    }
+  }
 
-  Future<void> deleteReport(id) async => await _reportDatatasource.deleteReport(id);
+  Future<void> deleteReport(String id) async {
+    try {
+      await _ReportDatatasource.deleteReport(id);
+    } catch (error) {
+      logError('Error deleting Report in repository: $error');
+    }
+  }
 
-  Future<void> rateReport(report) async => await _reportDatatasource.rateReport(report);
+  Future<void> rateReport(Report reports) async {
+    try {
+      await _ReportDatatasource.rateReport(reports);
+    } catch (error) {
+      logError('Error updating Report in repository: $error');
+    }
+  }
 }
