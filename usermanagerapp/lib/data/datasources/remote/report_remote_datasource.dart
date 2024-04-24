@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:loggy/loggy.dart';
@@ -57,9 +59,11 @@ Future<List<Report>> getAllReports() async {
       }
     } catch (error) {
       logError('Error deleting Report: $error');
-      throw Exception('Error deleting Report: $error');
+      throw Exception('Error deleting Repor: $error');
     }
   }
+
+
 
   Future<void> rateReport(Report reporti) async {
     try {

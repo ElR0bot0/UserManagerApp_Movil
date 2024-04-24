@@ -117,12 +117,10 @@ class _CreateUSState extends State<CreateUS> {
                             US us = US(id: idcontroller.text, name: namecontroller.text, email: emailcontroller.text, password: passwordcontroller.text, reportquantity: 0);
                             await usController.addUS(us);
                               Client client = Client(id: '22', name: 'try');
-                              Report report = Report(id: 135552, clientid: int.parse(client.id), usid: int.parse(us.id), problem: 'Problem', duration: '0', startDate: DateTime.now(), desc: 'desc', rating: 0);
+                              Report report = Report(id: 99, clientid: int.parse(client.id), usid: int.parse(us.id), problem: 'Problem', duration: '0', startDate: DateTime.now(), desc: 'desc', rating: 0);
                               us.reportquantity++;
                               await usController.updateUS(us);
                               await reportController.addReport(report);
-                              print(reportController.reports.length);
-
                         Get.off(HomePageUC(
                             key: const Key('HomePageUC'), loggedEmail: '', loggedPassword: '',)
                             );

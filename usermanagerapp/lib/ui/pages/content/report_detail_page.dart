@@ -22,101 +22,95 @@ class _ReportDetailPageState extends State<ReportDetailPage> {
   final controllerRating = TextEditingController();
   final controllerStartDate = TextEditingController();
 
-  @override
-  void initState()  {
-    super.initState();
-    report = Get.arguments[0];
-    controllerProblem.text = report.problem;
-    controllerDesc.text = report.desc;
-    controllerDuration.text = report.duration;
-    controllerRating.text = report.rating.toString();
-    controllerStartDate.text = report.startDate.toString();
-    controllerClient.text = report.clientid.toString();
-  }
+@override
+void initState() {
+  super.initState();
+  report = Get.arguments[0];
+  controllerProblem.text = report.problem;
+  controllerDesc.text = report.desc;
+  controllerDuration.text = report.duration;
+  controllerRating.text = report.rating.toString();
+  controllerStartDate.text = report.startDate.toString();
+  controllerClient.text = report.clientid.toString();
+  controllerUS.text = report.usid.toString();
+}
+
 
   @override
   Widget build(BuildContext context) {
-    USController usController = Get.find();
-
-    return FutureBuilder<US?>(
-      future: usController.getUSById(report.usid.toString()),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Scaffold(
-            body: Center(child: CircularProgressIndicator()),
-          );
-        } else if (snapshot.hasError) {
-          return Scaffold(
-            body: Center(child: Text('Error: ${snapshot.error}')),
-          );
-        } else {
-          US? usi = snapshot.data;
-
-          controllerUS.text = usi?.name ?? 'US not found';
-
-          if (report.rating > 0) {
-            return buildReportDetailScaffold(controllerUS, controllerClient, context);
-          } else {
-            return buildRatingScaffold(controllerProblem, controllerDesc, controllerUS, controllerClient, controllerDuration, controllerStartDate, context);
-          }
-        }
-      },
-    );
-  }
-
-  Scaffold buildReportDetailScaffold(TextEditingController controllerUS, TextEditingController controllerClient, BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Get.back();
-          },
+    if (report.rating > 0) {
+      return Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Get.back();
+            },
+          ),
+          title: Text('Report Detail'),
         ),
-        title: Text('Report Detail'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              buildTextField(controllerProblem, 'Problem'),
-              const SizedBox(height: 20),
-              buildTextField(controllerDesc, 'Description'),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Flexible(child: buildTextField(controllerUS, 'US')),
-                  Flexible(child: buildTextField(controllerClient, 'Client')),
-                ],
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                buildTextField(controllerProblem, 'Problem'),
+                const SizedBox(
+                  height: 20,
+                ),
+                buildTextField(controllerDesc, 'Description'),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      child: buildTextField(controllerUS, 'US'),
+                    ),
+                    Flexible(
+                      child: buildTextField(controllerClient, 'Client'),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      child: buildTextField(controllerDuration, 'Duration'),
+                    ),
+                    Flexible(
+                      child: buildTextField(controllerStartDate, 'Start Date'),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  'Rating',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ), Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(
+                  int.parse(controllerRating.text),
+                  (index) => Icon(
+                    Icons.star,
+                    color: Colors.yellow,
+                    size: 32,
+                  ),
+                ),
               ),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Flexible(child: buildTextField(controllerDuration, 'Duration')),
-                  Flexible(child: buildTextField(controllerStartDate, 'Start Date')),
-                ],
-              ),
-              const SizedBox(height: 20),
-              Text('Rating', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              buildRatingStars(controllerRating),
-            ],
+              ],
+            ),
           ),
         ),
-      ),
-    );
-  }
+      );
+    }
 
-  Scaffold buildRatingScaffold(
-      TextEditingController controllerProblem,
-      TextEditingController controllerDesc,
-      TextEditingController controllerUS,
-      TextEditingController controllerClient,
-      TextEditingController controllerDuration,
-      TextEditingController controllerStartDate,
-      BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -133,27 +127,45 @@ class _ReportDetailPageState extends State<ReportDetailPage> {
           child: Column(
             children: [
               buildTextField(controllerProblem, 'Problem'),
-              const SizedBox(height: 20),
+              const SizedBox(
+                height: 20,
+              ),
               buildTextField(controllerDesc, 'Description'),
-              const SizedBox(height: 20),
+              const SizedBox(
+                height: 20,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Flexible(child: buildTextField(controllerUS, 'US')),
-                  Flexible(child: buildTextField(controllerClient, 'Client')),
+                  Flexible(
+                    child: buildTextField(controllerUS, 'Support User ID'),
+                  ),
+                  Flexible(
+                    child: buildTextField(controllerClient, 'Client ID'),
+                  ),
                 ],
               ),
-              const SizedBox(height: 20),
+              const SizedBox(
+                height: 20,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Flexible(child: buildTextField(controllerDuration, 'Duration')),
-                  Flexible(child: buildTextField(controllerStartDate, 'Start Date')),
+                  Flexible(
+                    child: buildTextField(controllerDuration, 'Duration'),
+                  ),
+                  Flexible(
+                    child: buildTextField(controllerStartDate, 'Start Date'),
+                  ),
                 ],
               ),
-              const SizedBox(height: 20),
+              const SizedBox(
+                height: 20,
+              ),
               buildRatingStars(controllerRating),
-              const SizedBox(height: 20),
+              const SizedBox(
+                height: 20,
+              ),
               ElevatedButton(
                 onPressed: () async {
                   int rating = int.tryParse(controllerRating.text) ?? 0;
@@ -166,7 +178,7 @@ class _ReportDetailPageState extends State<ReportDetailPage> {
                     USController usController = Get.find();
                     Report newreport = report;
                     newreport.rating = rating;
-                    reportController.rateReport(newreport);
+                    await reportController.rateReport(newreport);
                     US? newus = await usController.getUSById(report.usid.toString());
                     if (newus?.ratings == null) {
                       newus?.ratings = [rating];
@@ -184,7 +196,7 @@ class _ReportDetailPageState extends State<ReportDetailPage> {
                     newus?.avgrating = avg;
                     usController.updateUS(newus);
                     Get.back();
-                  }
+                    }
                 },
                 child: Text('Rate this report'),
               ),
@@ -198,15 +210,26 @@ class _ReportDetailPageState extends State<ReportDetailPage> {
   Widget buildTextField(TextEditingController controller, String label) {
     return Column(
       children: [
-        Text(label, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-        const SizedBox(height: 10),
+        Text(
+          label,
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
         TextField(
           controller: controller,
           decoration: InputDecoration(
             labelText: '',
-            enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
-            focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.blue)),
-            border: UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
+            enabledBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey),
+            ),
+            focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.blue),
+            ),
+            border: UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.grey),
+            ),
           ),
           readOnly: true,
           style: TextStyle(fontSize: 20),
@@ -224,10 +247,9 @@ class _ReportDetailPageState extends State<ReportDetailPage> {
         5,
         (index) => GestureDetector(
           onTap: () {
-            setState(() {
+              setState(() {
               controller.text = (index + 1).toString();
-
-            });
+              });        
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4.0),

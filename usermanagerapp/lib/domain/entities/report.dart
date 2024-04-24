@@ -30,7 +30,6 @@ class Report {
       clientid: json['clientid'],
       usid: json['usid'],
     );
-    print(usi.toJson());
     return usi;
   }
 
