@@ -1,18 +1,15 @@
-import 'package:f_testing_template/ui/controllers/us_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../domain/entities/report.dart';
-import '../../../domain/entities/us.dart';
-import '../../controllers/report_controller.dart';
 
-class ReportDetailPage extends StatefulWidget {
-  const ReportDetailPage({Key? key}) : super(key: key);
+class ReportDetailPageUS extends StatefulWidget {
+  const ReportDetailPageUS({Key? key}) : super(key: key);
 
   @override
-  _ReportDetailPageState createState() => _ReportDetailPageState();
+  _ReportDetailPageStateUS createState() => _ReportDetailPageStateUS();
 }
 
-class _ReportDetailPageState extends State<ReportDetailPage> {
+class _ReportDetailPageStateUS extends State<ReportDetailPageUS> {
   late Report report;
   final controllerClient = TextEditingController();
   final controllerUS = TextEditingController();
@@ -162,44 +159,26 @@ void initState() {
               const SizedBox(
                 height: 20,
               ),
-              buildRatingStars(controllerRating),
-              const SizedBox(
-                height: 20,
-              ),
-              ElevatedButton(
-                onPressed: () async {
-                  int rating = int.tryParse(controllerRating.text) ?? 0;
-                  if (rating == 0) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('You must select a rating')),
-                    );
-                  } else {
-                    ReportController reportController = Get.find();
-                    USController usController = Get.find();
-                    Report newreport = report;
-                    newreport.rating = rating;
-                    await reportController.rateReport(newreport);
-                    US? newus = await usController.getUSById(report.usid.toString());
-                    if (newus?.ratings == null) {
-                      newus?.ratings = [rating];
-                    } else {
-                      newus?.ratings?.add(rating);
-                    }
-
-                    int suma = 0;
-                    if (newus?.ratings != null) {
-                      for (int ratingg in newus!.ratings!) {
-                        suma += ratingg;
-                      }
-                    }
-                    double avg = suma / (newus?.ratings!.length ?? 1);
-                    newus?.avgrating = avg;
-                    usController.updateUS(newus);
-                    Get.back();
-                    }
-                },
-                child: Text('Rate this report'),
-              ),
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.access_time, // Puedes cambiar este icono a cualquier otro que prefieras
+                      size: 50,
+                      color: Colors.grey,
+                    ),
+                    SizedBox(height: 16),
+                    Text(
+                      'Awaiting for coordinator to rate this report',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
         ),

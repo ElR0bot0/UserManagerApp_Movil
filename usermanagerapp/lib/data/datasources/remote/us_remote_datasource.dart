@@ -6,7 +6,6 @@ import '../../../domain/entities/us.dart';
 
 class USRemoteDataSource {
   final String baseUrl = 'https://retoolapi.dev/sG38Em/data'; // Reemplaza con tu URL de la API
-
   Future<void> addUS(US us) async {
     try {
       final response = await http.post(

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loggy/loggy.dart';
-
 import '../../domain/entities/report.dart';
 import '../controllers/report_controller.dart';
-import '../pages/content/report_detail_page.dart';
+import '../pages/content/report_detail_pageus.dart';
 
-class ListItemReport extends StatelessWidget {
+class ListItemReportUS extends StatelessWidget {
   final Report report;
-  const ListItemReport(this.report, {Key? key}) : super(key: key);
+  const ListItemReportUS(this.report, {Key? key}) : super(key: key);
   
   @override
   Widget build(BuildContext context) {
@@ -56,7 +55,7 @@ class ListItemReport extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
-                  Get.to(() => ReportDetailPage(
+                  Get.to(() => ReportDetailPageUS(
                 key: const Key('ReportDetailPage')
               ), arguments: [report, report.id]);
                 },

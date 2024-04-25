@@ -8,9 +8,12 @@ import '../../../domain/entities/report.dart';
 
 class ReportRemoteDataSource {
   final String baseUrl = 'https://retoolapi.dev/AgUtyU/data'; // Reemplaza con tu URL de la API
-
+  static int globalId = 1;
+  
   Future<void> addReport(Report report) async {
     try {
+      report.id = globalId;
+      globalId++;
       final response = await http.post(
         Uri.parse('$baseUrl'),
         body: jsonEncode(report.toJson()),
