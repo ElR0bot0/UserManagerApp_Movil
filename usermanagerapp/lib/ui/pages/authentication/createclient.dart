@@ -79,7 +79,7 @@ class _CreateClientPageState extends State<CreateClient> {
                     onPressed: () async {
                             Client client = Client(id: idcontroller.text, name: namecontroller.text);
                             await clientController.addClient(client);
-                        Get.off(HomePageUC(
+                        Get.off(()=>HomePageUC(
                             key: const Key('HomePageUC'), loggedEmail: '', loggedPassword: '',)
                             );
                     },

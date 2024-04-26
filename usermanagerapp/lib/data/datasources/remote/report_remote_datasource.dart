@@ -1,34 +1,29 @@
 import 'dart:async';
-
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:loggy/loggy.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../domain/entities/report.dart';
 
 class ReportRemoteDataSource {
   final String baseUrl = 'https://retoolapi.dev/AgUtyU/data'; // Reemplaza con tu URL de la API
-  static int globalId = 1;
   
-  Future<void> addReport(Report report) async {
-    try {
-      report.id = globalId;
-      globalId++;
-      final response = await http.post(
-        Uri.parse('$baseUrl'),
-        body: jsonEncode(report.toJson()),
-        headers: {'Content-Type': 'application/json'},
-      );
-
-      if (response.statusCode == 200) {
-        logInfo("Remote data source adding Report");
+  Future <void> addReport(Report report, int status) async {
+      try {
+      if (status == 0) {
+        await savePendingRecord(report);
+        print('status 0');
+      } else if (status == 1){
+        await uploadToApi(report); 
+        print('status 1');
       } else {
-        throw Exception('Failed to add Report. status code: ${response.statusCode}, Body: ${response.body}');
+        await uploadPendingRecords();
+        print('status 2');
       }
-    } catch (error) {
-      logError('Error adding Report: $error');
-      throw Exception('Error adding Report: $error');
-    }
+      } catch (error) {
+        print('Error adding Report: $error');
+        throw Exception('Error adding Report: $error');
+      }
   }
 
 Future<List<Report>> getAllReports() async {
@@ -66,8 +61,6 @@ Future<List<Report>> getAllReports() async {
     }
   }
 
-
-
   Future<void> rateReport(Report reporti) async {
     try {
       final response = await http.put(
@@ -84,4 +77,47 @@ Future<List<Report>> getAllReports() async {
       throw Exception('Error updating Report: $error');
     }
   }
+
+Future<void> savePendingRecord(Report report) async {
+  final prefs = await SharedPreferences.getInstance();
+  List<String>? pendingReports = prefs.getStringList('pendingReports') ?? [];
+  pendingReports.add(jsonEncode(report.toJson())); // Convertir el reporte a JSON
+  await prefs.setStringList('pendingReports', pendingReports);
+}
+
+Future<void> uploadToApi(Report report) async {
+      try {
+      final response = await http.post(
+        Uri.parse(baseUrl),
+        body: jsonEncode(report.toJson()),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        logInfo("Remote data source adding Report");
+      } else {
+        throw Exception('Failed to add Report. status code: ${response.statusCode}, Body: ${response.body}');
+      }
+    } catch (error) {
+      print('Error uploading Report: $error');
+      throw Exception('Error uploading Report: $error');
+    }
+}
+
+Future<void> uploadPendingRecords() async {
+  final prefs = await SharedPreferences.getInstance();
+  List<String>? pendingReports = prefs.getStringList('pendingReports');
+  if (pendingReports != null && pendingReports.isNotEmpty) {
+    for (var reportJson in pendingReports) {
+      Map<String, dynamic> reportMap = jsonDecode(reportJson); // Convertir JSON a mapa
+      Report report = Report.fromJson(reportMap); // Crear una instancia de Report desde el mapa
+      await uploadToApi(report);
+    }
+    // Limpia la lista de reportes pendientes después de subirlos
+    await prefs.remove('pendingReports');
+  }
+}
+
+
+
 }

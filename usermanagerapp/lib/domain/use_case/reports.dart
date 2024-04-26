@@ -7,7 +7,7 @@ class Reportss {
   final ReportRepository _repository = Get.find();
   Reportss(find);
 
-  Future<void> addReport(reporti) async => await _repository.addReport(reporti);
+  Future<void> addReport(reporti, status) async => await _repository.addReport(reporti, status);
 
   Future<List<Report>> getAllReports() async => await _repository.getAllReports();
 

@@ -1,6 +1,6 @@
 class Report {
   Report({
-    required this.id,
+     this.id,
     required this.clientid,
     required this.usid,
     required this.problem,
@@ -10,7 +10,7 @@ class Report {
     required this.startDate
   });
 
-  int id;
+  int? id;
   int clientid;
   int usid;
   String problem;

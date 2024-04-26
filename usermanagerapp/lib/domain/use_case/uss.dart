@@ -26,12 +26,4 @@ class USs {
     }
   }
 
-  Future<US?> getUSByEmail(String email) async {
-    try {
-      return await _repository.getUSByEmail(email);
-    } catch (error) {
-      print('Error getting US by Email in USs class: $error');
-      return null;
-    }
-  }
 }

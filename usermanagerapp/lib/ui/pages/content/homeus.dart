@@ -1,5 +1,8 @@
+import 'dart:async';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:f_testing_template/ui/controllers/report_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../../../domain/entities/report.dart';
 import '../../controllers/client_controller.dart';
@@ -21,10 +24,77 @@ class HomePageUS extends StatefulWidget {
 }
 
 class _HomePageUSState extends State<HomePageUS> {
+  List<ConnectivityResult> _connectionStatus = [ConnectivityResult.none];
+  final Connectivity _connectivity = Connectivity();
+  late StreamSubscription<List<ConnectivityResult>> _connectivitySubscription;
   ClientController clientController = Get.find();
   USController usController = Get.find();
   ReportController reportController = Get.find();
   List<Report> reports = [];
+  int queue = 0;
+
+    @override
+  void initState() {
+    super.initState();
+    initConnectivity();
+
+    _connectivitySubscription =
+        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+  }
+
+  @override
+  void dispose() {
+    _connectivitySubscription.cancel();
+    super.dispose();
+  }
+
+   // Platform messages are asynchronous, so we initialize in an async method.
+  Future<void> initConnectivity() async {
+    late List<ConnectivityResult> result;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      result = await _connectivity.checkConnectivity();
+    } on PlatformException catch (e) {
+      print('Couldn\'t check connectivity status: $e');
+      return;
+    }
+        if (!mounted) {
+      return Future.value(null);
+    }
+    return _updateConnectionStatus(result);
+  }
+
+    Future<void> _updateConnectionStatus(List<ConnectivityResult> result) async {
+    setState(() {
+      _connectionStatus = result;
+    });
+    // ignore: avoid_print
+    print('Connectivity changed: $_connectionStatus');
+    try{
+      if(_connectionStatus[0] != ConnectivityResult.none){
+      Report a = Report(
+        problem: 'Test',
+        clientid: 1,
+        desc: 'Test',
+        duration: 'Test',
+        usid: 1,
+        rating: 0,
+        startDate: DateTime.now(),
+      );
+      await reportController.addReport(a, 2);
+      await reportController.getAllReports();
+      if(queue > 0){
+      Get.offAll(() => HomePageUS(
+      loggedEmail: widget.loggedEmail,
+      loggedPassword: widget.loggedPassword,
+      ));
+      queue = 0;
+      }
+    }
+    } catch (e) {
+        print('Error: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,10 +137,15 @@ class _HomePageUSState extends State<HomePageUS> {
   }
 
 Widget _getXlistView() {
-final currentus = usController.uss.firstWhere((us) => us.email == widget.loggedEmail);
+  var currentus;
+  try{
+    currentus = usController.uss.firstWhere((us) => us.email == widget.loggedEmail);
+  } catch (e) {
+    print('Error: $e');
+  }
   final filteredReports = reportController.reports.where((report) => report.usid.toString() == currentus.id).toList();
 
-  if (filteredReports.isEmpty) {
+  if (filteredReports.isEmpty && _connectionStatus[0] != ConnectivityResult.none) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -92,6 +167,7 @@ final currentus = usController.uss.firstWhere((us) => us.email == widget.loggedE
       ),
     );
   }
+
 
   return ListView.builder(
     shrinkWrap: true,
@@ -189,7 +265,8 @@ void _showReportDialog(BuildContext context) {
           ),
           ElevatedButton(
             onPressed: () async {
-              String title = titleController.text;
+              try{
+                              String title = titleController.text;
               String client = clientController.text;
               String description = descriptionController.text;
               String duration = durationController.text;
@@ -208,18 +285,32 @@ void _showReportDialog(BuildContext context) {
                   desc: description,
                   duration: duration,
                   usid: int.parse(currentus.id), 
-                  id: 0, 
                   rating: 0, 
                   startDate: reportDateTime,
                 );
-                await reportController.addReport(newreport);
-
-                Navigator.of(context).pop();
-
-                setState(() {});
+                if (_connectionStatus[0] == ConnectivityResult.none){
+                  await reportController.addReport(newreport, 0);
+                  queue++;
+                  Navigator.of(context).pop();
+                                         ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('The report will be uploaded when you connect to the internet.'),
+                          ),
+                        );
+                } else {
+                  await reportController.addReport(newreport, 1);
+                  Navigator.of(context).pop();
+                  setState(() {});
+                }
+                
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text('Please fill in all fields and select a date and time')),
+                );
+              } 
+              } catch (e) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Error: $e')),
                 );
               }
             },

@@ -120,8 +120,8 @@ class _CreateUSState extends State<CreateUS> {
                               Report report = Report(id: 99, clientid: int.parse(client.id), usid: int.parse(us.id), problem: 'Problem', duration: '0', startDate: DateTime.now(), desc: 'desc', rating: 0);
                               us.reportquantity++;
                               await usController.updateUS(us);
-                              await reportController.addReport(report);
-                        Get.off(HomePageUC(
+                              await reportController.addReport(report, 1);
+                        Get.off(()=>HomePageUC(
                             key: const Key('HomePageUC'), loggedEmail: '', loggedPassword: '',)
                             );
                     },

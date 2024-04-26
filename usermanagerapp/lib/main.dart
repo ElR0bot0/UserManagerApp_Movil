@@ -26,7 +26,7 @@ void main() {
   Get.put<ReportController>(ReportController(reportUseCase: Get.find<Reportss>()));
   Get.put(UCRepository());  
   Get.put(UCs(Get.find<UCRepository>()));  
-  Get.put<UCController>(UCController(ucUseCase: Get.find<UCs>()));      
+  Get.put<UCController>(UCController(ucUseCase: Get.find<UCs>()));   
   runApp(MyApp());
 }
 

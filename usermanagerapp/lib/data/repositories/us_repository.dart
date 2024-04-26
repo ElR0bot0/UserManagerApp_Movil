@@ -22,7 +22,8 @@ class USRepository {
 
   Future<List<US>> getAllUSs() async {
     try {
-      return await _uSDatatasource.getAllUSs();
+      var list = await _uSDatatasource.getAllUSs();
+      return list;
     } catch (error) {
       logError('Error getting all USs in repository: $error');
       return [];

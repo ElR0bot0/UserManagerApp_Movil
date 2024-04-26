@@ -29,13 +29,14 @@ Future<List<US>> getAllUSs() async {
   try {
     final response = await http.get(Uri.parse('$baseUrl'));
 
-    logInfo('GET All USs - Response Status Code: ${response.statusCode}');
-    logInfo('GET All USs - Response Body: ${response.body}');
+    //print('GET All USs - Response Status Code: ${response.statusCode}');
+    //print('GET All USs - Response Body: ${response.body}');
 
     if (response.statusCode == 200) {
-      logInfo("Remote data returning getAllUSs");
+      //print("Remote data returning getAllUSs");
       List<dynamic> jsonResponse = jsonDecode(response.body);
       List<US> usList = jsonResponse.map((data) => US.fromJson(data)).toList();
+      print('exito por fin');
       logInfo('GET All USs - Decoded US List: $usList');
       return usList;
     } else {

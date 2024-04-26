@@ -16,9 +16,9 @@ class ReportController extends GetxController {
     getAllReports();
   }
 
-  Future<void> addReport(report) async {
+  Future<void> addReport(report, status) async {
     logInfo("ReportController -> add reporter");
-    await reportUseCase.addReport(report);
+    await reportUseCase.addReport(report, status);
     await getAllReports();
   }
 

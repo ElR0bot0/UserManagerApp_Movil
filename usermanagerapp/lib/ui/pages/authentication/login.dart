@@ -87,22 +87,26 @@ class _LoginScreenState extends State<LoginScreen> {
                     bool isuc = await ucController.authenticateUC(_emailController.text, _passwordController.text);
                     bool isus = await usController.authenticateUS(_emailController.text, _passwordController.text);
                     if (isuc) {
-                      Get.offAll(HomePageUC(
-                        key: const Key('HomePage'),
+                      Get.offAll(() => HomePageUC(
+                        key: const Key('HomePageUC'),
                         loggedEmail: _emailController.text,
                         loggedPassword: _passwordController.text,
                       ));
                     } else {
                       if(isus){                       
-                        Get.offAll(HomePageUS(
-                          key: const Key('HomePage'),
+                        try{
+                          Get.offAll(() => HomePageUS(
+                          key: const Key('HomePageUS'),
                           loggedEmail: _emailController.text,
                           loggedPassword: _passwordController.text,
                         ));
+                        } catch (e) {
+                          print(e);
+                        }
                       } else { // Mostrar un mensaje de error al usuario
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text('Email o contraseña incorrectos'),
+                            content: Text('Wrong email or password'),
                           ),
                         );
                       }

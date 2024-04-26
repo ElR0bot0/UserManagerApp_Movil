@@ -25,7 +25,7 @@ class US {
       password: json['password'],
       reportquantity: json['reportquantity'],
       ratings: json['ratings'] != null ? List<int>.from(json['ratings']) : null,
-      avgrating: json['avgrating'] ?? 0.0,
+      avgrating: json['avgrating'] != null ? double.tryParse(json['avgrating'].toString()) ?? 0.0 : 0.0,
     );
     return usi;
   }

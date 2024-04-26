@@ -10,12 +10,12 @@ class ReportRepository {
     _ReportDatatasource = ReportRemoteDataSource();
   }
 
-  Future<bool> addReport(Report reporti) async {
+  Future<bool> addReport(Report reporti, int status) async {
     try {
-      await _ReportDatatasource.addReport(reporti);
+      await _ReportDatatasource.addReport(reporti, status);
       return true;
     } catch (error) {
-      logError('Error adding Report in repository: $error');
+      print('Error adding Report in repository: $error');
       return false;
     }
   }
