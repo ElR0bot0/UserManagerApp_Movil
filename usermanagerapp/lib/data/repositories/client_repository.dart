@@ -45,7 +45,7 @@ class ClientRepository {
     }
   }
 
-    Future<Client?> getClientById(String id) async {
+  Future<Client?> getClientById(String id) async {
     try {
       return await _ClientDatatasource.getClientById(id);
     } catch (error) {
@@ -62,5 +62,4 @@ class ClientRepository {
       return null;
     }
   }
-
 }
