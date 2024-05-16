@@ -27,6 +27,7 @@ void main() {
   Get.put(UCRepository());  
   Get.put(UCs(Get.find<UCRepository>()));  
   Get.put<UCController>(UCController(ucUseCase: Get.find<UCs>()));   
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 

@@ -1,18 +1,20 @@
 import 'package:loggy/loggy.dart';
 import '../../domain/entities/client.dart';
+import '../../domain/repositories/iclientrepository.dart';
 import '../datasources/remote/client_remote_datasource.dart';
 
-class ClientRepository {
-  late ClientRemoteDataSource _ClientDatatasource;
+class ClientRepository implements IClientRepository {
+  late ClientRemoteDataSource _clientDatasource;
 
   ClientRepository() {
     logInfo("Starting ClientRepository");
-    _ClientDatatasource = ClientRemoteDataSource();
+    _clientDatasource = ClientRemoteDataSource();
   }
 
-  Future<bool> addClient(Client clienti) async {
+  @override
+  Future<bool> addClient(Client client) async {
     try {
-      await _ClientDatatasource.addClient(clienti);
+      await _clientDatasource.addClient(client);
       return true;
     } catch (error) {
       logError('Error adding Client in repository: $error');
@@ -20,47 +22,51 @@ class ClientRepository {
     }
   }
 
+  @override
   Future<List<Client>> getAllClients() async {
     try {
-      return await _ClientDatatasource.getAllClients();
+      return await _clientDatasource.getAllClients();
     } catch (error) {
       logError('Error getting all Clients in repository: $error');
       return [];
     }
   }
 
+  @override
   Future<void> deleteClient(String id) async {
     try {
-      await _ClientDatatasource.deleteClient(id);
+      await _clientDatasource.deleteClient(id);
     } catch (error) {
       logError('Error deleting Client in repository: $error');
     }
   }
 
-  Future<void> updateClient(Client clients) async {
+  @override
+  Future<void> updateClient(Client client) async {
     try {
-      await _ClientDatatasource.updateClient(clients);
+      await _clientDatasource.updateClient(client);
     } catch (error) {
       logError('Error updating Client in repository: $error');
     }
   }
 
-    Future<Client?> getClientById(String id) async {
+  @override
+  Future<Client?> getClientById(String id) async {
     try {
-      return await _ClientDatatasource.getClientById(id);
+      return await _clientDatasource.getClientById(id);
     } catch (error) {
       logError('Error getting Client by ID in repository: $error');
       return null;
     }
   }
 
+  @override
   Future<Client?> getClientByEmail(String email) async {
     try {
-      return await _ClientDatatasource.getClientByEmail(email);
+      return await _clientDatasource.getClientByEmail(email);
     } catch (error) {
       logError('Error getting Client by Email in repository: $error');
       return null;
     }
   }
-
 }
