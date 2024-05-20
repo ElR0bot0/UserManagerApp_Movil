@@ -15,7 +15,7 @@ class ReportRepository {
       await _ReportDatatasource.addReport(reporti, status);
       return true;
     } catch (error) {
-      print('Error adding Report in repository: $error');
+      logError('Error adding Report in repository: $error');
       return false;
     }
   }

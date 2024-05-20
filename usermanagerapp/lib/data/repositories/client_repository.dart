@@ -37,9 +37,9 @@ class ClientRepository {
     }
   }
 
-  Future<void> updateClient(Client clients) async {
+  Future<void> updateClient(Client client) async {
     try {
-      await _ClientDatatasource.updateClient(clients);
+      await _ClientDatatasource.updateClient(client);
     } catch (error) {
       logError('Error updating Client in repository: $error');
     }

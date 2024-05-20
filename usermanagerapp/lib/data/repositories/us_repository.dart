@@ -46,9 +46,10 @@ class USRepository {
     }
   }
 
-  Future<bool> authenticateUS(String email, String password) async => await _uSDatatasource.authenticateUS(email, password);
+  Future<bool> authenticateUS(String email, String password) async =>
+      await _uSDatatasource.authenticateUS(email, password);
 
-    Future<US?> getUSById(String id) async {
+  Future<US?> getUSById(String id) async {
     try {
       return await _uSDatatasource.getUSById(id);
     } catch (error) {
@@ -65,7 +66,4 @@ class USRepository {
       return null;
     }
   }
-
 }
-
-
