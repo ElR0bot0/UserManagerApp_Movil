@@ -7,11 +7,11 @@ import 'dart:async' as _i4;
 import 'dart:convert' as _i7;
 import 'dart:typed_data' as _i9;
 
-import 'package:f_testing_template/data/datasources/remote/report_remote_datasource.dart'
+import 'package:f_testing_template/data/datasources/remote/i_report_remote_datasource.dart'
     as _i6;
 
 import 'package:f_testing_template/domain/entities/report.dart' as _i5;
-import 'package:f_testing_template/data/repositories/report_repository.dart'
+import 'package:f_testing_template/domain/repositories/ireportrepository.dart'
     as _i3;
 import 'package:http/http.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
@@ -54,7 +54,7 @@ class _FakeStreamedResponse_1 extends _i1.SmartFake
 /// A class which mocks [ReportRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIUserRepository extends _i1.Mock implements _i3.ReportRepository {
+class MockIUserRepository extends _i1.Mock implements _i3.IReportRepository {
   MockIUserRepository() {
     _i1.throwOnMissingStub(this);
   }
@@ -85,7 +85,7 @@ class MockIUserRepository extends _i1.Mock implements _i3.ReportRepository {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockIUserDataSource extends _i1.Mock
-    implements _i6.ReportRemoteDataSource {
+    implements _i6.IReportRemoteDataSource {
   MockIUserDataSource() {
     _i1.throwOnMissingStub(this);
   }

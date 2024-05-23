@@ -7,11 +7,11 @@ import 'dart:async' as _i4;
 import 'dart:convert' as _i7;
 import 'dart:typed_data' as _i9;
 
-import 'package:f_testing_template/data/datasources/remote/client_remote_datasource.dart'
+import 'package:f_testing_template/data/datasources/remote/i_client_remote_datasource.dart'
     as _i6;
 
 import 'package:f_testing_template/domain/entities/client.dart' as _i5;
-import 'package:f_testing_template/data/repositories/client_repository.dart'
+import 'package:f_testing_template/domain/repositories/iclientrepository.dart'
     as _i3;
 import 'package:http/http.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
@@ -54,7 +54,7 @@ class _FakeStreamedResponse_1 extends _i1.SmartFake
 /// A class which mocks [ClientRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIUserRepository extends _i1.Mock implements _i3.ClientRepository {
+class MockIUserRepository extends _i1.Mock implements _i3.IClientRepository {
   MockIUserRepository() {
     _i1.throwOnMissingStub(this);
   }
@@ -98,7 +98,7 @@ class MockIUserRepository extends _i1.Mock implements _i3.ClientRepository {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockIUserDataSource extends _i1.Mock
-    implements _i6.ClientRemoteDataSource {
+    implements _i6.IClientRemoteDataSource {
   MockIUserDataSource() {
     _i1.throwOnMissingStub(this);
   }

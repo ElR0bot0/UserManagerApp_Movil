@@ -7,10 +7,11 @@ import 'dart:async' as _i4;
 import 'dart:convert' as _i7;
 import 'dart:typed_data' as _i9;
 
-import 'package:f_testing_template/data/datasources/remote/us_remote_datasource.dart'
+import 'package:f_testing_template/data/datasources/remote/i_us_remote_datasource.dart'
     as _i6;
 import 'package:f_testing_template/domain/entities/us.dart' as _i5;
-import 'package:f_testing_template/data/repositories/us_repository.dart' as _i3;
+import 'package:f_testing_template/domain/repositories/iusrepository.dart'
+    as _i3;
 import 'package:http/http.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i8;
@@ -52,7 +53,7 @@ class _FakeStreamedResponse_1 extends _i1.SmartFake
 /// A class which mocks [USRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockUSRepository extends _i1.Mock implements _i3.USRepository {
+class MockUSRepository extends _i1.Mock implements _i3.IUSRepository {
   MockUSRepository() {
     _i1.throwOnMissingStub(this);
   }
@@ -97,7 +98,7 @@ class MockUSRepository extends _i1.Mock implements _i3.USRepository {
 /// A class which mocks [USRemoteDataSource].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockUSDataSource extends _i1.Mock implements _i6.USRemoteDataSource {
+class MockUSDataSource extends _i1.Mock implements _i6.IUSRemoteDataSource {
   MockUSDataSource() {
     _i1.throwOnMissingStub(this);
   }
