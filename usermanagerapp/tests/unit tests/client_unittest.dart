@@ -26,7 +26,7 @@ void main() {
 
       // Stub the behavior of the mock
       when(mockRemoteDataSource.addClient(client))
-          .thenAnswer((_) async => null);
+          .thenAnswer((_) async => true);
 
       // Act
       final result = await repository.addClient(client);

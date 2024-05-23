@@ -80,18 +80,18 @@ class MockIUserRepository extends _i1.Mock implements _i3.ClientRepository {
         returnValue: _i4.Future<bool>.value(false),
       ) as _i4.Future<bool>);
   @override
-  Future<_i5.Client?> getClientById(String id) => (super.noSuchMethod(
-        Invocation.method(#getClientById, [id]),
-        returnValue: _i4.Future<_i5.Client?>.value(
-            _FakeResponse_0(this, Invocation.method(#getClientById, [id]))),
+  Future<_i5.Client?> getClientById(String ID) => (super.noSuchMethod(
+        Invocation.method(#getClientById, [ID]),
+        returnValue:
+            _i4.Future<_i5.Client?>.value(_i5.Client(id: ID, name: 'John Doe')),
       ) as _i4.Future<_i5.Client?>);
 
   @override
   Future<_i5.Client?> getClientByEmail(String email) => (super.noSuchMethod(
         Invocation.method(#getClientByEmail, [email]),
-        returnValue: _i4.Future<_i5.Client?>.value(
-            _FakeResponse_0(this, Invocation.method(#getClientById, [email]))),
-      ) as _i4.Future<_i5.Client?>);
+        returnValue:
+            Future<_i5.Client?>.value(_i5.Client(id: '1', name: 'John Doe')),
+      ) as Future<_i5.Client?>);
 }
 
 /// A class which mocks [ClientRemoteDataSource].
@@ -124,17 +124,18 @@ class MockIUserDataSource extends _i1.Mock
         returnValue: _i4.Future<bool>.value(false),
       ) as _i4.Future<bool>);
   @override
-  Future<_i5.Client?> getClientById(String id) => (super.noSuchMethod(
-        Invocation.method(#getClientById, [id]),
-        returnValue: _i4.Future<_i5.Client?>.value(
-            _FakeResponse_0(this, Invocation.method(#getClientById, [id]))),
+  Future<_i5.Client?> getClientById(String ID) => (super.noSuchMethod(
+        Invocation.method(#getClientById, [ID]),
+        returnValue:
+            _i4.Future<_i5.Client?>.value(_i5.Client(id: ID, name: 'John Doe')),
       ) as _i4.Future<_i5.Client?>);
+
   @override
   Future<_i5.Client?> getClientByEmail(String email) => (super.noSuchMethod(
         Invocation.method(#getClientByEmail, [email]),
-        returnValue: _i4.Future<_i5.Client?>.value(
-            _FakeResponse_0(this, Invocation.method(#getClientById, [email]))),
-      ) as _i4.Future<_i5.Client?>);
+        returnValue:
+            Future<_i5.Client?>.value(_i5.Client(id: '1', name: 'John Doe')),
+      ) as Future<_i5.Client?>);
 }
 
 /// A class which mocks [Client].

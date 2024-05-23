@@ -12,8 +12,7 @@ class ClientRepository {
 
   Future<bool> addClient(Client clienti) async {
     try {
-      await _ClientDatatasource.addClient(clienti);
-      return true;
+      return await _ClientDatatasource.addClient(clienti);
     } catch (error) {
       logError('Error adding Client in repository: $error');
       return false;
@@ -29,19 +28,21 @@ class ClientRepository {
     }
   }
 
-  Future<void> deleteClient(String id) async {
+  Future<bool> deleteClient(String id) async {
     try {
-      await _ClientDatatasource.deleteClient(id);
+      return await _ClientDatatasource.deleteClient(id);
     } catch (error) {
       logError('Error deleting Client in repository: $error');
+      return false;
     }
   }
 
-  Future<void> updateClient(Client client) async {
+  Future<bool> updateClient(Client client) async {
     try {
-      await _ClientDatatasource.updateClient(client);
+      return await _ClientDatatasource.updateClient(client);
     } catch (error) {
       logError('Error updating Client in repository: $error');
+      return false;
     }
   }
 

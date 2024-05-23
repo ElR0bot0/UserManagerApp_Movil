@@ -12,8 +12,7 @@ class ReportRepository {
 
   Future<bool> addReport(Report reporti, int status) async {
     try {
-      await _ReportDatatasource.addReport(reporti, status);
-      return true;
+      return await _ReportDatatasource.addReport(reporti, status);
     } catch (error) {
       logError('Error adding Report in repository: $error');
       return false;
@@ -29,19 +28,21 @@ class ReportRepository {
     }
   }
 
-  Future<void> deleteReport(String id) async {
+  Future<bool> deleteReport(String id) async {
     try {
-      await _ReportDatatasource.deleteReport(id);
+      return await _ReportDatatasource.deleteReport(id);
     } catch (error) {
       logError('Error deleting Report in repository: $error');
+      return false;
     }
   }
 
-  Future<void> rateReport(Report reports) async {
+  Future<bool> rateReport(Report reports) async {
     try {
-      await _ReportDatatasource.rateReport(reports);
+      return await _ReportDatatasource.rateReport(reports);
     } catch (error) {
       logError('Error updating Report in repository: $error');
+      return false;
     }
   }
 }

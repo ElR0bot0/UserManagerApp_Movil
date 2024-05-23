@@ -12,8 +12,7 @@ class USRepository {
 
   Future<bool> addUS(US usi) async {
     try {
-      await _uSDatatasource.addUS(usi);
-      return true;
+      return await _uSDatatasource.addUS(usi);
     } catch (error) {
       logError('Error adding US in repository: $error');
       return false;
@@ -30,19 +29,21 @@ class USRepository {
     }
   }
 
-  Future<void> deleteUS(String id) async {
+  Future<bool> deleteUS(String id) async {
     try {
-      await _uSDatatasource.deleteUS(id);
+      return await _uSDatatasource.deleteUS(id);
     } catch (error) {
       logError('Error deleting US in repository: $error');
+      return false;
     }
   }
 
-  Future<void> updateUS(US uss) async {
+  Future<bool> updateUS(US uss) async {
     try {
-      await _uSDatatasource.updateUS(uss);
+      return await _uSDatatasource.updateUS(uss);
     } catch (error) {
       logError('Error updating US in repository: $error');
+      return false;
     }
   }
 
