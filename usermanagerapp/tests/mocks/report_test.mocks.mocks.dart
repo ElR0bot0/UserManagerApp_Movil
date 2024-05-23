@@ -51,7 +51,7 @@ class _FakeStreamedResponse_1 extends _i1.SmartFake
         );
 }
 
-/// A class which mocks [ReportRepository].
+/// A class which mocks [IReportRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockIUserRepository extends _i1.Mock implements _i3.IReportRepository {
@@ -81,7 +81,7 @@ class MockIUserRepository extends _i1.Mock implements _i3.IReportRepository {
       ) as _i4.Future<bool>);
 }
 
-/// A class which mocks [ReportRemoteDataSource].
+/// A class which mocks [IReportRemoteDataSource].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockIUserDataSource extends _i1.Mock

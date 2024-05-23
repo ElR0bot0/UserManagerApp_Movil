@@ -7,11 +7,10 @@ import 'dart:async' as _i4;
 import 'dart:convert' as _i7;
 import 'dart:typed_data' as _i9;
 
-import 'package:f_testing_template/data/datasources/remote/i_us_remote_datasource.dart'
+import 'package:f_testing_template/data/datasources/local/i_report_local_datasource.dart'
     as _i6;
-import 'package:f_testing_template/domain/entities/us.dart' as _i5;
-import 'package:f_testing_template/domain/repositories/iusrepository.dart'
-    as _i3;
+
+import 'package:f_testing_template/domain/entities/report.dart' as _i5;
 import 'package:http/http.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i8;
@@ -50,94 +49,33 @@ class _FakeStreamedResponse_1 extends _i1.SmartFake
         );
 }
 
-/// A class which mocks [IUSRepository].
+/// A class which mocks [IReportDataSource].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockUSRepository extends _i1.Mock implements _i3.IUSRepository {
-  MockUSRepository() {
+class MockIReportDataSource extends _i1.Mock implements _i6.IReportDataSource {
+  MockIReportDataSource() {
     _i1.throwOnMissingStub(this);
   }
-
   @override
-  _i4.Future<List<_i5.US>> getAllUSs() => (super.noSuchMethod(
-        Invocation.method(
-          #getAllUSs,
-          [],
-        ),
-        returnValue: _i4.Future<List<_i5.US>>.value(<_i5.US>[]),
-      ) as _i4.Future<List<_i5.US>>);
-
+  Future<int> insertReport(_i5.Report reports) => (super.noSuchMethod(
+        Invocation.method(#insertReport, [reports]),
+        returnValue: _i4.Future<int>.value(0),
+      ) as _i4.Future<int>);
   @override
-  _i4.Future<bool> addUS(_i5.US? user) => (super.noSuchMethod(
-        Invocation.method(
-          #addUS,
-          [user],
-        ),
-        returnValue: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
-
+  Future<List<_i5.Report>> getReports() => (super.noSuchMethod(
+        Invocation.method(#getAllReports, []),
+        returnValue: _i4.Future<List<_i5.Report>>.value(<_i5.Report>[]),
+      ) as _i4.Future<List<_i5.Report>>);
   @override
-  _i4.Future<bool> updateUS(_i5.US? user) => (super.noSuchMethod(
-        Invocation.method(
-          #updateUS,
-          [user],
-        ),
-        returnValue: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
-
+  Future<int> updateReport(_i5.Report reports) => (super.noSuchMethod(
+        Invocation.method(#updateReport, [reports]),
+        returnValue: _i4.Future<int>.value(0),
+      ) as _i4.Future<int>);
   @override
-  _i4.Future<bool> deleteUS(String? id) => (super.noSuchMethod(
-        Invocation.method(
-          #deleteUS,
-          [id],
-        ),
-        returnValue: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
-}
-
-/// A class which mocks [IUSRemoteDataSource].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockUSDataSource extends _i1.Mock implements _i6.IUSRemoteDataSource {
-  MockUSDataSource() {
-    _i1.throwOnMissingStub(this);
-  }
-
-  @override
-  _i4.Future<List<_i5.US>> getAllUSs() => (super.noSuchMethod(
-        Invocation.method(
-          #getUsers,
-          [],
-        ),
-        returnValue: _i4.Future<List<_i5.US>>.value(<_i5.US>[]),
-      ) as _i4.Future<List<_i5.US>>);
-
-  @override
-  _i4.Future<bool> addUS(_i5.US? user) => (super.noSuchMethod(
-        Invocation.method(
-          #addUS,
-          [user],
-        ),
-        returnValue: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
-
-  @override
-  _i4.Future<bool> updateUS(_i5.US? user) => (super.noSuchMethod(
-        Invocation.method(
-          #updateUS,
-          [user],
-        ),
-        returnValue: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
-
-  @override
-  _i4.Future<bool> deleteUS(String? id) => (super.noSuchMethod(
-        Invocation.method(
-          #deleteUS,
-          [id],
-        ),
-        returnValue: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
+  Future<int> deleteReport(int id) => (super.noSuchMethod(
+        Invocation.method(#deleteReport, [id]),
+        returnValue: _i4.Future<int>.value(0),
+      ) as _i4.Future<int>);
 }
 
 /// A class which mocks [Client].

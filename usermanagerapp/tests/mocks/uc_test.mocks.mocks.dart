@@ -49,11 +49,11 @@ class _FakeStreamedResponse_1 extends _i1.SmartFake
         );
 }
 
-/// A class which mocks [USRepository].
+/// A class which mocks [IUCRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIUserRepository extends _i1.Mock implements _i3.IUCRepository {
-  MockIUserRepository() {
+class MockIUCRepository extends _i1.Mock implements _i3.IUCRepository {
+  MockIUCRepository() {
     _i1.throwOnMissingStub(this);
   }
 
@@ -68,11 +68,11 @@ class MockIUserRepository extends _i1.Mock implements _i3.IUCRepository {
       ) as _i4.Future<bool>);
 }
 
-/// A class which mocks [USRemoteDataSource].
+/// A class which mocks [IUCRemoteDatasource].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockIUserDataSource extends _i1.Mock implements _i6.IUCRemoteDatasource {
-  MockIUserDataSource() {
+class MockIUCDataSource extends _i1.Mock implements _i6.IUCRemoteDatasource {
+  MockIUCDataSource() {
     _i1.throwOnMissingStub(this);
   }
 
