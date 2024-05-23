@@ -3,10 +3,13 @@ import 'dart:convert';
 import 'package:loggy/loggy.dart';
 
 import '../../../domain/entities/us.dart';
+import 'i_us_remote_datasource.dart';
 
-class USRemoteDataSource {
+class USRemoteDataSource implements IUSRemoteDataSource {
   final String baseUrl =
       'https://retoolapi.dev/sG38Em/data'; // Reemplaza con tu URL de la API
+
+  @override
   Future<bool> addUS(US us) async {
     try {
       final response = await http.post(
@@ -28,9 +31,10 @@ class USRemoteDataSource {
     }
   }
 
+  @override
   Future<List<US>> getAllUSs() async {
     try {
-      final response = await http.get(Uri.parse('$baseUrl'));
+      final response = await http.get(Uri.parse(baseUrl));
 
       //print('GET All USs - Response Status Code: ${response.statusCode}');
       //print('GET All USs - Response Body: ${response.body}');
@@ -40,7 +44,6 @@ class USRemoteDataSource {
         List<dynamic> jsonResponse = jsonDecode(response.body);
         List<US> usList =
             jsonResponse.map((data) => US.fromJson(data)).toList();
-        print('exito por fin');
         logInfo('GET All USs - Decoded US List: $usList');
         return usList;
       } else {
@@ -53,6 +56,7 @@ class USRemoteDataSource {
     }
   }
 
+  @override
   Future<bool> deleteUS(String id) async {
     try {
       final response = await http.delete(Uri.parse('$baseUrl/$id'));
@@ -68,6 +72,7 @@ class USRemoteDataSource {
     }
   }
 
+  @override
   Future<bool> updateUS(US usi) async {
     try {
       final response = await http.put(
@@ -87,6 +92,7 @@ class USRemoteDataSource {
     }
   }
 
+  @override
   Future<bool> authenticateUS(String email, String password) async {
     try {
       final response = await http.get(
@@ -113,11 +119,11 @@ class USRemoteDataSource {
       }
     } catch (e) {
       // Manejar cualquier error que pueda ocurrir durante la solicitud
-      print('Error: $e');
       return false;
     }
   }
 
+  @override
   Future<US?> getUSById(String id) async {
     try {
       final response = await http.get(Uri.parse('$baseUrl/$id'));
@@ -140,6 +146,7 @@ class USRemoteDataSource {
     }
   }
 
+  @override
   Future<US?> getUSByEmail(String email) async {
     try {
       final response = await http.get(Uri.parse('$baseUrl?email=$email'));

@@ -1,8 +1,9 @@
 import 'package:loggy/loggy.dart';
 import '../../domain/entities/us.dart';
+import '../../domain/repositories/iusrepository.dart';
 import '../datasources/remote/us_remote_datasource.dart';
 
-class USRepository {
+class USRepository implements IUSRepository {
   late USRemoteDataSource _uSDatatasource;
 
   USRepository() {
@@ -10,6 +11,7 @@ class USRepository {
     _uSDatatasource = USRemoteDataSource();
   }
 
+  @override
   Future<bool> addUS(US usi) async {
     try {
       return await _uSDatatasource.addUS(usi);
@@ -19,6 +21,7 @@ class USRepository {
     }
   }
 
+  @override
   Future<List<US>> getAllUSs() async {
     try {
       var list = await _uSDatatasource.getAllUSs();
@@ -29,6 +32,7 @@ class USRepository {
     }
   }
 
+  @override
   Future<bool> deleteUS(String id) async {
     try {
       return await _uSDatatasource.deleteUS(id);
@@ -38,6 +42,7 @@ class USRepository {
     }
   }
 
+  @override
   Future<bool> updateUS(US uss) async {
     try {
       return await _uSDatatasource.updateUS(uss);
@@ -47,9 +52,12 @@ class USRepository {
     }
   }
 
-  Future<bool> authenticateUS(String email, String password) async =>
-      await _uSDatatasource.authenticateUS(email, password);
+  @override
+  Future<bool> authenticateUS(String email, String password) async {
+    return await _uSDatatasource.authenticateUS(email, password);
+  }
 
+  @override
   Future<US?> getUSById(String id) async {
     try {
       return await _uSDatatasource.getUSById(id);
@@ -59,6 +67,7 @@ class USRepository {
     }
   }
 
+  @override
   Future<US?> getUSByEmail(String email) async {
     try {
       return await _uSDatatasource.getUSByEmail(email);

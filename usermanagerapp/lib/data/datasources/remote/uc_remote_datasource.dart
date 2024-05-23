@@ -1,7 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-class UCRemoteDatasource {
+import 'i_uc_remote_datasource.dart';
+
+class UCRemoteDatasource implements IUCRemoteDatasource{
+
+  @override
   Future<bool> authenticateUC(String email, String password) async {
     const String apiUrl = 'https://retoolapi.dev/Nlayzp/data/';
 
@@ -30,7 +34,6 @@ class UCRemoteDatasource {
         }
     } catch (e) {
       // Manejar cualquier error que pueda ocurrir durante la solicitud
-      print('Error: $e');
       return false;
     }
   }

@@ -2,13 +2,15 @@ import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:loggy/loggy.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../../domain/entities/report.dart';
+import '../local/report_local_datasource.dart';
+import 'i_report_remote_datasource.dart';
 
-class ReportRemoteDataSource {
+class ReportRemoteDataSource implements IReportRemoteDataSource {
   final String baseUrl =
       'https://retoolapi.dev/AgUtyU/data'; // Reemplaza con tu URL de la API
 
+  @override
   Future<bool> addReport(Report report, int status) async {
     try {
       if (status == 0) {
@@ -28,6 +30,7 @@ class ReportRemoteDataSource {
     }
   }
 
+  @override
   Future<List<Report>> getAllReports() async {
     try {
       final response = await http.get(Uri.parse('$baseUrl'));
@@ -52,6 +55,7 @@ class ReportRemoteDataSource {
     }
   }
 
+  @override
   Future<bool> deleteReport(String id) async {
     try {
       final response = await http.delete(Uri.parse('$baseUrl/$id'));
@@ -67,6 +71,7 @@ class ReportRemoteDataSource {
     }
   }
 
+  @override
   Future<bool> rateReport(Report reporti) async {
     try {
       final response = await http.put(
@@ -86,14 +91,7 @@ class ReportRemoteDataSource {
     }
   }
 
-  Future<void> savePendingRecord(Report report) async {
-    final prefs = await SharedPreferences.getInstance();
-    List<String>? pendingReports = prefs.getStringList('pendingReports') ?? [];
-    pendingReports
-        .add(jsonEncode(report.toJson())); // Convertir el reporte a JSON
-    await prefs.setStringList('pendingReports', pendingReports);
-  }
-
+  @override
   Future<void> uploadToApi(Report report) async {
     try {
       final response = await http.post(
@@ -114,19 +112,34 @@ class ReportRemoteDataSource {
     }
   }
 
+  @override
+  Future<void> savePendingRecord(Report report) async {
+    try {
+      final dbHelper = DatabaseHelper();
+      await dbHelper.insertReport(
+          report); // Insertar el informe en la base de datos SQLite
+    } catch (e) {
+      // Manejar errores, si es necesario
+      print('Error saving Report in db: $e');
+    }
+  }
+
+  @override
   Future<void> uploadPendingRecords() async {
-    final prefs = await SharedPreferences.getInstance();
-    List<String>? pendingReports = prefs.getStringList('pendingReports');
-    if (pendingReports != null && pendingReports.isNotEmpty) {
-      for (var reportJson in pendingReports) {
-        Map<String, dynamic> reportMap =
-            jsonDecode(reportJson); // Convertir JSON a mapa
-        Report report = Report.fromJson(
-            reportMap); // Crear una instancia de Report desde el mapa
-        await uploadToApi(report);
+    try {
+      final dbHelper = DatabaseHelper();
+      List<Report> pendingReports = await dbHelper
+          .getReports(); // Obtener los informes pendientes de la base de datos SQLite
+      if (pendingReports.isNotEmpty) {
+        for (var report in pendingReports) {
+          await uploadToApi(report); // Subir el informe a la API
+          await dbHelper.deleteReport(report
+              .id!); // Eliminar el informe de la base de datos después de subirlo
+        }
       }
-      // Limpia la lista de reportes pendientes después de subirlos
-      await prefs.remove('pendingReports');
+    } catch (e) {
+      // Manejar errores, si es necesario
+      print('Error uploading Report: $e');
     }
   }
 }

@@ -3,11 +3,13 @@ import 'dart:convert';
 import 'package:loggy/loggy.dart';
 
 import '../../../domain/entities/client.dart';
+import 'i_client_remote_datasource.dart';
 
-class ClientRemoteDataSource {
+class ClientRemoteDataSource implements IClientRemoteDataSource {
   final String baseUrl =
       'https://retoolapi.dev/MAImUm/data'; // Reemplaza con tu URL de la API
 
+  @override
   Future<bool> addClient(Client client) async {
     try {
       final response = await http.post(
@@ -29,6 +31,7 @@ class ClientRemoteDataSource {
     }
   }
 
+  @override
   Future<List<Client>> getAllClients() async {
     try {
       final response = await http.get(Uri.parse('$baseUrl'));
@@ -53,6 +56,7 @@ class ClientRemoteDataSource {
     }
   }
 
+  @override
   Future<bool> deleteClient(String id) async {
     try {
       final response = await http.delete(Uri.parse('$baseUrl/$id'));
@@ -68,6 +72,7 @@ class ClientRemoteDataSource {
     }
   }
 
+  @override
   Future<bool> updateClient(Client clienti) async {
     try {
       final response = await http.put(
@@ -86,6 +91,7 @@ class ClientRemoteDataSource {
     }
   }
 
+  @override
   Future<Client?> getClientById(String id) async {
     try {
       final response = await http.get(Uri.parse('$baseUrl/$id'));
@@ -110,6 +116,7 @@ class ClientRemoteDataSource {
     }
   }
 
+  @override
   Future<Client?> getClientByEmail(String email) async {
     try {
       final response = await http.get(Uri.parse('$baseUrl?email=$email'));
