@@ -53,4 +53,13 @@ class USController extends GetxController {
       return null;
     }
   }
+
+    Future<US?> getUSByEmail(String email) async {
+    try {
+      return await usUseCase.getUSByEmail(email);
+    } catch (error) {
+      logError('Error getting US by email in USController: $error');
+      return null;
+    }
+  }
 }

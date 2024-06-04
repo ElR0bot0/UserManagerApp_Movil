@@ -81,4 +81,16 @@ class DatabaseHelper implements IReportDataSource {
       whereArgs: [id],
     );
   }
+
+  @override
+Future<int> getPendingCount() async {
+    Database db = await database;
+    List<Map<String, dynamic>> maps = await db.query('reports');
+    var list = List.generate(maps.length, (i) {
+      return Report.fromJson(maps[i]);
+    });
+    int count = list.length;
+  return count;
+}
+
 }

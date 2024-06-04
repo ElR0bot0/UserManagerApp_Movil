@@ -14,4 +14,6 @@ class Reportss {
   Future<void> deleteReport(id) async => await _repository.deleteReport(id);
 
   Future<void> rateReport(reporti) async => await _repository.rateReport(reporti);
+
+  Future<int> getPendingCount() async => await _repository.getPendingCount();
 }

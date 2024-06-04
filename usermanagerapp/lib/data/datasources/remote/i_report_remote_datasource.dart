@@ -7,5 +7,5 @@ abstract class IReportRemoteDataSource {
   Future<void> rateReport(Report report);
   Future<void> savePendingRecord(Report report);
   Future<void> uploadToApi(Report report);
-  Future<void> uploadPendingRecords();
+  Future<void> uploadPendingRecords(Report a);
 }

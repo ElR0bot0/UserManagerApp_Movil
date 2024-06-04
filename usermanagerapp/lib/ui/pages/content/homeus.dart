@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../../../domain/entities/report.dart';
+import '../../../domain/entities/us.dart';
 import '../../controllers/client_controller.dart';
 import '../../controllers/us_controller.dart';
 import '../../widgets/list_itemreportus.dart';
@@ -15,16 +16,18 @@ class HomePageUS extends StatefulWidget {
     Key? key,
     required this.loggedEmail,
     required this.loggedPassword,
+    required this.que,
   }) : super(key: key);
   final String loggedEmail;
   final String loggedPassword;
+  final int que;
 
   @override
   State<HomePageUS> createState() => _HomePageUSState();
 }
 
 class _HomePageUSState extends State<HomePageUS> {
-  List<ConnectivityResult> _connectionStatus = [ConnectivityResult.none];
+  List<ConnectivityResult> _connectionStatus = [ConnectivityResult.wifi];
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<List<ConnectivityResult>> _connectivitySubscription;
   ClientController clientController = Get.find();
@@ -36,8 +39,10 @@ class _HomePageUSState extends State<HomePageUS> {
     @override
   void initState() {
     super.initState();
+    if(widget.que != 0){
+      queue = widget.que;
+    }
     initConnectivity();
-
     _connectivitySubscription =
         _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
   }
@@ -72,24 +77,24 @@ class _HomePageUSState extends State<HomePageUS> {
     print('Connectivity changed: $_connectionStatus');
     try{
       if(_connectionStatus[0] != ConnectivityResult.none){
-      Report a = Report(
-        problem: 'Test',
-        clientid: 1,
-        desc: 'Test',
-        duration: 'Test',
-        usid: 1,
-        rating: 0,
-        startDate: DateTime.now(),
-      );
+        try { 
+          var currentuss = usController.uss.firstWhere((us) => us.email == widget.loggedEmail);
+      Report a = Report(problem: 'Test',clientid: 1,desc: 'Test',duration: 'Test', usid: int.parse(currentuss.id) ,rating: 0,startDate: DateTime.now());
       await reportController.addReport(a, 2);
       await reportController.getAllReports();
       if(queue > 0){
+        currentuss.reportquantity = currentuss.reportquantity + queue;
+        await usController.updateUS(currentuss);
       Get.offAll(() => HomePageUS(
       loggedEmail: widget.loggedEmail,
       loggedPassword: widget.loggedPassword,
+      que: 0
       ));
       queue = 0;
       }
+        } catch (e) {
+          print('Error: $e');
+        }
     }
     } catch (e) {
         print('Error: $e');
@@ -137,13 +142,16 @@ class _HomePageUSState extends State<HomePageUS> {
   }
 
 Widget _getXlistView() {
-  var currentus;
+try{
+    var currentus;
   try{
     currentus = usController.uss.firstWhere((us) => us.email == widget.loggedEmail);
-  } catch (e) {
-    print('Error: $e');
+  } catch (e){
+    return Text(usController.uss.length.toString());
   }
+    
   final filteredReports = reportController.reports.where((report) => report.usid.toString() == currentus.id).toList();
+  print(filteredReports.length);
 
   if (filteredReports.isEmpty && _connectionStatus[0] != ConnectivityResult.none) {
     return Center(
@@ -178,6 +186,29 @@ Widget _getXlistView() {
       return ListItemReportUS(user);
     },
   );
+} catch(e){
+  return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.report_off, // Puedes cambiar este icono a cualquier otro que prefieras
+            size: 50,
+            color: Colors.grey,
+          ),
+          SizedBox(height: 16),
+          Text(
+            'Error: $e',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      ),
+    );
+
+}
 }
 
 void _showReportDialog(BuildContext context) {
@@ -288,8 +319,6 @@ void _showReportDialog(BuildContext context) {
                   rating: 0, 
                   startDate: reportDateTime,
                 );
-                  currentus.reportquantity++;
-                  await usController.updateUS(currentus);
                 if (_connectionStatus[0] == ConnectivityResult.none){
                   await reportController.addReport(newreport, 0);
                   queue++;
@@ -300,6 +329,8 @@ void _showReportDialog(BuildContext context) {
                           ),
                         );
                 } else {
+                  currentus.reportquantity++;
+                  await usController.updateUS(currentus);
                   await reportController.addReport(newreport, 1);
                   Navigator.of(context).pop();
                   setState(() {});
