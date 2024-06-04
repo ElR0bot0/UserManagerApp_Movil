@@ -1,8 +1,6 @@
-import 'package:f_testing_template/domain/entities/client.dart';
 import 'package:f_testing_template/ui/controllers/report_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../domain/entities/report.dart';
 import '../../../domain/entities/us.dart';
 import '../../controllers/us_controller.dart';
 import '../content/homeuc.dart';
@@ -116,11 +114,6 @@ class _CreateUSState extends State<CreateUS> {
                     onPressed: () async {
                             US us = US(id: idcontroller.text, name: namecontroller.text, email: emailcontroller.text, password: passwordcontroller.text, reportquantity: 0);
                             await usController.addUS(us);
-                              Client client = Client(id: '22', name: 'try');
-                              Report report = Report(id: 99, clientid: int.parse(client.id), usid: int.parse(us.id), problem: 'Problem', duration: '0', startDate: DateTime.now(), desc: 'desc', rating: 0);
-                              us.reportquantity++;
-                              await usController.updateUS(us);
-                              await reportController.addReport(report, 1);
                         Get.off(()=>HomePageUC(
                             key: const Key('HomePageUC'), loggedEmail: '', loggedPassword: '',)
                             );

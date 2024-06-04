@@ -288,6 +288,8 @@ void _showReportDialog(BuildContext context) {
                   rating: 0, 
                   startDate: reportDateTime,
                 );
+                  currentus.reportquantity++;
+                  await usController.updateUS(currentus);
                 if (_connectionStatus[0] == ConnectivityResult.none){
                   await reportController.addReport(newreport, 0);
                   queue++;
