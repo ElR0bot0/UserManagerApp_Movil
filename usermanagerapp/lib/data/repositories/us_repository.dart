@@ -1,15 +1,12 @@
+import 'package:f_testing_template/data/datasources/remote/i_us_remote_datasource.dart';
 import 'package:loggy/loggy.dart';
 import '../../domain/entities/us.dart';
 import '../../domain/repositories/iusrepository.dart';
-import '../datasources/remote/us_remote_datasource.dart';
 
 class USRepository implements IUSRepository {
-  late USRemoteDataSource _uSDatatasource;
+  final IUSRemoteDataSource _uSDatatasource;
 
-  USRepository() {
-    logInfo("Starting USRepository");
-    _uSDatatasource = USRemoteDataSource();
-  }
+  USRepository(this._uSDatatasource);
 
   @override
   Future<bool> addUS(US usi) async {

@@ -9,7 +9,10 @@ import 'i_report_remote_datasource.dart';
 class ReportRemoteDataSource implements IReportRemoteDataSource {
   final String baseUrl =
       'https://retoolapi.dev/AgUtyU/data'; // Reemplaza con tu URL de la API
+  final http.Client httpClient;
 
+  ReportRemoteDataSource({http.Client? client})
+      : httpClient = client ?? http.Client();
   @override
   Future<bool> addReport(Report report, int status) async {
     try {
@@ -23,7 +26,7 @@ class ReportRemoteDataSource implements IReportRemoteDataSource {
         await uploadPendingRecords();
         print('status 2');
       }
-      return true;
+      return Future.value(true);
     } catch (error) {
       print('Error adding Report: $error');
       throw Exception('Error adding Report: $error');
@@ -33,7 +36,7 @@ class ReportRemoteDataSource implements IReportRemoteDataSource {
   @override
   Future<List<Report>> getAllReports() async {
     try {
-      final response = await http.get(Uri.parse('$baseUrl'));
+      final response = await httpClient.get(Uri.parse('$baseUrl'));
 
       logInfo('GET All Reports - Response status Code: ${response.statusCode}');
       logInfo('GET All Reports - Response Body: ${response.body}');
@@ -44,7 +47,7 @@ class ReportRemoteDataSource implements IReportRemoteDataSource {
         List<Report> reportList =
             jsonResponse.map((data) => Report.fromJson(data)).toList();
         logInfo('GET All Reports - Decoded Report List: $reportList');
-        return reportList;
+        return Future.value(reportList);
       } else {
         throw Exception(
             'Failed to load Reports. status code: ${response.statusCode}, Body: ${response.body}');
@@ -58,13 +61,13 @@ class ReportRemoteDataSource implements IReportRemoteDataSource {
   @override
   Future<bool> deleteReport(String id) async {
     try {
-      final response = await http.delete(Uri.parse('$baseUrl/$id'));
+      final response = await httpClient.delete(Uri.parse('$baseUrl/$id'));
 
       if (response.statusCode != 200) {
         throw Exception(
             'Failed to delete Report. status code: ${response.statusCode}, Body: ${response.body}');
       }
-      return true;
+      return Future.value(true);
     } catch (error) {
       logError('Error deleting Report: $error');
       throw Exception('Error deleting Repor: $error');
@@ -74,17 +77,17 @@ class ReportRemoteDataSource implements IReportRemoteDataSource {
   @override
   Future<bool> rateReport(Report reporti) async {
     try {
-      final response = await http.put(
+      final response = await httpClient.put(
         Uri.parse('$baseUrl/${reporti.id}'),
         body: jsonEncode(reporti.toJson()),
-        headers: {'Content-Type': 'application/json'},
+        headers: {'Content-Type': 'application/json; charset=UTF-8'},
       );
 
       if (response.statusCode != 200) {
         throw Exception(
             'Failed to update Report. status code: ${response.statusCode}, Body: ${response.body}');
       }
-      return true;
+      return Future.value(true);
     } catch (error) {
       logError('Error updating Report: $error');
       throw Exception('Error updating Report: $error');
@@ -92,16 +95,17 @@ class ReportRemoteDataSource implements IReportRemoteDataSource {
   }
 
   @override
-  Future<void> uploadToApi(Report report) async {
+  Future<bool> uploadToApi(Report report) async {
     try {
-      final response = await http.post(
+      final response = await httpClient.post(
         Uri.parse(baseUrl),
         body: jsonEncode(report.toJson()),
-        headers: {'Content-Type': 'application/json'},
+        headers: {'Content-Type': 'application/json; charset=UTF-8'},
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         logInfo("Remote data source adding Report");
+        return Future.value(true);
       } else {
         throw Exception(
             'Failed to add Report. status code: ${response.statusCode}, Body: ${response.body}');

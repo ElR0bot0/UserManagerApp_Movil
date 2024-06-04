@@ -1,15 +1,12 @@
 import 'package:loggy/loggy.dart';
 import '../../domain/entities/report.dart';
 import '../../domain/repositories/ireportrepository.dart';
-import '../datasources/remote/report_remote_datasource.dart';
+import '../datasources/remote/i_report_remote_datasource.dart';
 
 class ReportRepository implements IReportRepository {
-  late ReportRemoteDataSource _reportDatasource;
+  final IReportRemoteDataSource _reportDatasource;
 
-  ReportRepository() {
-    logInfo("Starting ReportRepository");
-    _reportDatasource = ReportRemoteDataSource();
-  }
+  ReportRepository(this._reportDatasource);
 
   @override
   Future<bool> addReport(Report report, int status) async {

@@ -1,11 +1,9 @@
-import 'package:get/get.dart';
-
-import '../../data/repositories/us_repository.dart';
+import 'package:f_testing_template/domain/repositories/iusrepository.dart';
 import '../entities/us.dart';
 
 class USs {
-  final USRepository _repository = Get.find();
-  USs(find);
+  final IUSRepository _repository;
+  USs(this._repository);
 
   Future<bool> addUS(usi) async => await _repository.addUS(usi);
 

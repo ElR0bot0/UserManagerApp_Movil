@@ -1,9 +1,8 @@
-import 'package:get/get.dart';
-
-import '../../data/repositories/uc_repository.dart';
+import 'package:f_testing_template/domain/repositories/iucrepository.dart';
 
 class UCs {
-  final UCRepository _repository = Get.find();
-  UCs(find);
-  Future<bool> authenticateUC(String email, String password) async => await _repository.authenticateUC(email, password);
+  final IUCRepository _repository;
+  UCs(this._repository);
+  Future<bool> authenticateUC(String email, String password) async =>
+      await _repository.authenticateUC(email, password);
 }

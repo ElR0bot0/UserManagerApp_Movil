@@ -1,15 +1,11 @@
+import 'package:f_testing_template/data/datasources/remote/i_client_remote_datasource.dart';
 import 'package:loggy/loggy.dart';
 import '../../domain/entities/client.dart';
 import '../../domain/repositories/iclientrepository.dart';
-import '../datasources/remote/client_remote_datasource.dart';
 
 class ClientRepository implements IClientRepository {
-  late ClientRemoteDataSource _clientDatasource;
-
-  ClientRepository() {
-    logInfo("Starting ClientRepository");
-    _clientDatasource = ClientRemoteDataSource();
-  }
+  final IClientRemoteDataSource _clientDatasource;
+  ClientRepository(this._clientDatasource);
 
   @override
   Future<bool> addClient(Client client) async {

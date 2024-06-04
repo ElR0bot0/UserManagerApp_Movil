@@ -1,12 +1,10 @@
+import 'package:f_testing_template/domain/repositories/iclientrepository.dart';
 import 'package:flutter/foundation.dart';
-import 'package:get/get.dart';
-
-import '../../data/repositories/client_repository.dart';
 import '../entities/client.dart';
 
 class Clientss {
-  final ClientRepository _repository = Get.find();
-  Clientss(find);
+  final IClientRepository _repository;
+  Clientss(this._repository);
 
   Future<bool> addClient(clienti) async => await _repository.addClient(clienti);
 

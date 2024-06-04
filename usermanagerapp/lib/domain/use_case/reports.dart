@@ -1,11 +1,10 @@
-import 'package:get/get.dart';
-
-import '../../data/repositories/report_repository.dart';
+import 'package:f_testing_template/domain/repositories/ireportrepository.dart';
 import '../entities/report.dart';
 
 class Reportss {
-  final ReportRepository _repository = Get.find();
-  Reportss(find);
+  final IReportRepository _repository;
+
+  Reportss(this._repository);
 
   Future<bool> addReport(reporti, status) async =>
       await _repository.addReport(reporti, status);

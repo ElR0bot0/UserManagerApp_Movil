@@ -8,17 +8,20 @@ import 'i_us_remote_datasource.dart';
 class USRemoteDataSource implements IUSRemoteDataSource {
   final String baseUrl =
       'https://retoolapi.dev/sG38Em/data'; // Reemplaza con tu URL de la API
+  final http.Client httpClient;
 
+  USRemoteDataSource({http.Client? client})
+      : httpClient = client ?? http.Client();
   @override
   Future<bool> addUS(US us) async {
     try {
-      final response = await http.post(
+      final response = await httpClient.post(
         Uri.parse('$baseUrl'),
         body: jsonEncode(us.toJson()),
-        headers: {'Content-Type': 'application/json'},
+        headers: {'Content-Type': 'application/json; charset=UTF-8'},
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         logInfo("Remote data source adding US");
         return true;
       } else {
@@ -34,7 +37,7 @@ class USRemoteDataSource implements IUSRemoteDataSource {
   @override
   Future<List<US>> getAllUSs() async {
     try {
-      final response = await http.get(Uri.parse(baseUrl));
+      final response = await httpClient.get(Uri.parse(baseUrl));
 
       //print('GET All USs - Response Status Code: ${response.statusCode}');
       //print('GET All USs - Response Body: ${response.body}');
@@ -59,7 +62,7 @@ class USRemoteDataSource implements IUSRemoteDataSource {
   @override
   Future<bool> deleteUS(String id) async {
     try {
-      final response = await http.delete(Uri.parse('$baseUrl/$id'));
+      final response = await httpClient.delete(Uri.parse('$baseUrl/$id'));
 
       if (response.statusCode != 200) {
         throw Exception(
@@ -75,10 +78,10 @@ class USRemoteDataSource implements IUSRemoteDataSource {
   @override
   Future<bool> updateUS(US usi) async {
     try {
-      final response = await http.put(
+      final response = await httpClient.put(
         Uri.parse('$baseUrl/${usi.id}'),
         body: jsonEncode(usi.toJson()),
-        headers: {'Content-Type': 'application/json'},
+        headers: {'Content-Type': 'application/json; charset=UTF-8'},
       );
 
       if (response.statusCode != 200) {
@@ -95,7 +98,7 @@ class USRemoteDataSource implements IUSRemoteDataSource {
   @override
   Future<bool> authenticateUS(String email, String password) async {
     try {
-      final response = await http.get(
+      final response = await httpClient.get(
         Uri.parse('$baseUrl?email=$email&clave=$password'),
       );
 
@@ -126,7 +129,7 @@ class USRemoteDataSource implements IUSRemoteDataSource {
   @override
   Future<US?> getUSById(String id) async {
     try {
-      final response = await http.get(Uri.parse('$baseUrl/$id'));
+      final response = await httpClient.get(Uri.parse('$baseUrl/$id'));
 
       logInfo('GET US by ID - Response Status Code: ${response.statusCode}');
       logInfo('GET US by ID - Response Body: ${response.body}');
@@ -149,7 +152,7 @@ class USRemoteDataSource implements IUSRemoteDataSource {
   @override
   Future<US?> getUSByEmail(String email) async {
     try {
-      final response = await http.get(Uri.parse('$baseUrl?email=$email'));
+      final response = await httpClient.get(Uri.parse('$baseUrl?email=$email'));
 
       logInfo('GET US by Email - Response Status Code: ${response.statusCode}');
       logInfo('GET US by Email - Response Body: ${response.body}');
