@@ -5,4 +5,5 @@ abstract class IReportRepository {
   Future<List<Report>> getAllReports();
   Future<bool> deleteReport(String id);
   Future<bool> rateReport(Report report);
+  Future<int> getPendingCount();
 }

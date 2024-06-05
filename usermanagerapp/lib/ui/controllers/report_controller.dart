@@ -39,4 +39,9 @@ class ReportController extends GetxController {
     await reportUseCase.rateReport(report);
     await getAllReports();
   }
+
+  Future<int> getPendingCount() async {
+    logInfo("ReportController -> getPendingCount");
+    return await reportUseCase.getPendingCount();
+  }
 }

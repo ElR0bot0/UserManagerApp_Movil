@@ -5,4 +5,5 @@ abstract class IReportDataSource {
   Future<List<Report>> getReports();
   Future<int> updateReport(Report report);
   Future<int> deleteReport(int id);
+  Future<int> getPendingCount();
 }

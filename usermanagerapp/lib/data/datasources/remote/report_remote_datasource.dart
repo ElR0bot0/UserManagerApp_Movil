@@ -23,7 +23,7 @@ class ReportRemoteDataSource implements IReportRemoteDataSource {
         await uploadToApi(report);
         print('status 1');
       } else {
-        await uploadPendingRecords();
+        await uploadPendingRecords(report);
         print('status 2');
       }
       return Future.value(true);
@@ -129,16 +129,18 @@ class ReportRemoteDataSource implements IReportRemoteDataSource {
   }
 
   @override
-  Future<void> uploadPendingRecords() async {
+  Future<void> uploadPendingRecords(Report a) async {
     try {
       final dbHelper = DatabaseHelper();
       List<Report> pendingReports = await dbHelper
           .getReports(); // Obtener los informes pendientes de la base de datos SQLite
       if (pendingReports.isNotEmpty) {
         for (var report in pendingReports) {
-          await uploadToApi(report); // Subir el informe a la API
-          await dbHelper.deleteReport(report
-              .id!); // Eliminar el informe de la base de datos después de subirlo
+          if (report.usid == a.usid) {
+            await uploadToApi(report); // Subir el informe a la API
+            await dbHelper.deleteReport(report
+                .id!); // Eliminar el informe de la base de datos después de subirlo
+          }
         }
       }
     } catch (e) {

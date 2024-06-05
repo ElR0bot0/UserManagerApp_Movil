@@ -1,6 +1,7 @@
 import 'package:f_testing_template/ui/controllers/uc_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../controllers/report_controller.dart';
 import '../../controllers/us_controller.dart';
 import '../content/homeuc.dart';
 import '../content/homeus.dart';
@@ -20,6 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  ReportController reportController = Get.find();
   bool useHomePageUS = false; // State variable to track the toggle state
 
   @override
@@ -95,10 +97,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     } else {
                       if(isus){                       
                         try{
+                          int count = 0;
+                          int queue = await reportController.getPendingCount();
+                          if (queue > 0){
+                            count = queue;
+                            await usController.getAllUSs();
+                          }
                           Get.offAll(() => HomePageUS(
                           key: const Key('HomePageUS'),
                           loggedEmail: _emailController.text,
                           loggedPassword: _passwordController.text,
+                          que: count,
                         ));
                         } catch (e) {
                           print(e);

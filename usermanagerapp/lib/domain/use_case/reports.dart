@@ -16,4 +16,6 @@ class Reportss {
 
   Future<bool> rateReport(reporti) async =>
       await _repository.rateReport(reporti);
+
+  Future<int> getPendingCount() async => await _repository.getPendingCount();
 }

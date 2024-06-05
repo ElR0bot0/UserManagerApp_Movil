@@ -4,6 +4,7 @@ import 'package:loggy/loggy.dart';
 
 import '../../domain/entities/report.dart';
 import '../controllers/report_controller.dart';
+import '../controllers/us_controller.dart';
 import '../pages/content/report_detail_page.dart';
 
 class ListItemReport extends StatelessWidget {
@@ -15,6 +16,7 @@ class ListItemReport extends StatelessWidget {
     String desc = "Support User ID: " + report.usid.toString() + " | Client ID: " + report.clientid.toString();
     logInfo("ListItem for report " + report.problem.toString());
     ReportController reportController = Get.find();
+    USController usController = Get.find();
     String? id = report.id.toString();
     return Center(
       child: Dismissible(
@@ -33,6 +35,9 @@ class ListItemReport extends StatelessWidget {
   try {
     // Remove the item from the data source.
     await reportController.deleteReport(report.id.toString());
+    var currentus = usController.uss.firstWhere((us) => us.id == report.usid.toString());
+    currentus.reportquantity--;
+    await usController.updateUS(currentus);
   } catch (error) {
     print('Error deleting report: $error');
   }

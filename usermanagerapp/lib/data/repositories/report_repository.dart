@@ -1,10 +1,12 @@
 import 'package:loggy/loggy.dart';
 import '../../domain/entities/report.dart';
 import '../../domain/repositories/ireportrepository.dart';
+import '../datasources/local/report_local_datasource.dart';
 import '../datasources/remote/i_report_remote_datasource.dart';
 
 class ReportRepository implements IReportRepository {
   final IReportRemoteDataSource _reportDatasource;
+  late DatabaseHelper report_local_datasource;
 
   ReportRepository(this._reportDatasource);
 
@@ -45,6 +47,17 @@ class ReportRepository implements IReportRepository {
     } catch (error) {
       logError('Error updating Report in repository: $error');
       return false;
+    }
+  }
+
+  @override
+  Future<int> getPendingCount() async {
+    try {
+      int count = await report_local_datasource.getPendingCount();
+      return count;
+    } catch (error) {
+      logError('Error updating Report in repository: $error');
+      return 0;
     }
   }
 }
