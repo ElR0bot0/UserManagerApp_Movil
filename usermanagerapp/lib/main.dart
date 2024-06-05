@@ -27,26 +27,62 @@ import 'ui/controllers/us_controller.dart';
 import 'ui/pages/authentication/login.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize dependencies
+  print("Registering IClientRemoteDataSource");
   Get.put<IClientRemoteDataSource>(ClientRemoteDataSource());
-  Get.put<IClientRepository>(ClientRepository(Get.find()));
-  Get.put(Clientss(Get.find<ClientRepository>()));
+
+  print("Registering IClientRepository");
+  Get.put<IClientRepository>(
+      ClientRepository(Get.find<IClientRemoteDataSource>()));
+
+  print("Registering Clientss");
+  Get.put(Clientss(Get.find<IClientRepository>()));
+
+  print("Registering ClientController");
   Get.put<ClientController>(
       ClientController(clientUseCase: Get.find<Clientss>()));
+
+  print("Registering IUSRemoteDataSource");
   Get.put<IUSRemoteDataSource>(USRemoteDataSource());
-  Get.put<IUSRepository>(USRepository(Get.find()));
-  Get.put(USs(Get.find<USRepository>()));
+
+  print("Registering IUSRepository");
+  Get.put<IUSRepository>(USRepository(Get.find<IUSRemoteDataSource>()));
+
+  print("Registering USs");
+  Get.put(USs(Get.find<IUSRepository>()));
+
+  print("Registering USController");
   Get.put<USController>(USController(usUseCase: Get.find<USs>()));
+
+  print("Registering IReportRemoteDataSource");
   Get.put<IReportRemoteDataSource>(ReportRemoteDataSource());
-  Get.put<IReportRepository>(ReportRepository(Get.find()));
-  Get.put(Reportss(Get.find<ReportRepository>()));
+
+  print("Registering IReportRepository");
+  Get.put<IReportRepository>(
+      ReportRepository(Get.find<IReportRemoteDataSource>()));
+
+  print("Registering Reportss");
+  Get.put(Reportss(Get.find<IReportRepository>()));
+
+  print("Registering ReportController");
   Get.put<ReportController>(
       ReportController(reportUseCase: Get.find<Reportss>()));
+
+  print("Registering IUCRemoteDatasource");
   Get.put<IUCRemoteDatasource>(UCRemoteDatasource());
-  Get.put<IUCRepository>(UCRepository(Get.find()));
-  Get.put(UCs(Get.find<UCRepository>()));
+
+  print("Registering IUCRepository");
+  Get.put<IUCRepository>(UCRepository(Get.find<IUCRemoteDatasource>()));
+
+  print("Registering UCs");
+  Get.put(UCs(Get.find<IUCRepository>()));
+
+  print("Registering UCController");
   Get.put<UCController>(UCController(ucUseCase: Get.find<UCs>()));
-  WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

@@ -50,18 +50,22 @@ class ListItem extends StatelessWidget {
                 ),
               ),
               TextButton(
+                key: const ValueKey('ClientReports_Button'),
                 onPressed: () {
                   Get.off(() => ClientReports(
-                key: const Key('ClientReports'), selectedClient: client,
-              ));
+                        key: const Key('ClientReports'),
+                        selectedClient: client,
+                      ));
                 },
                 child: const Text("Reports"),
               ),
               TextButton(
+                key: const ValueKey('ClientDetail_Button'),
                 onPressed: () {
-                  Get.off(() => ClientDetailPage(
-                key: const Key('ClientDetailPage')
-              ), arguments: [client, client.id]);
+                  Get.off(
+                      () =>
+                          ClientDetailPage(key: const Key('ClientDetailPage')),
+                      arguments: [client, client.id]);
                 },
                 child: const Text("Edit"),
               )
