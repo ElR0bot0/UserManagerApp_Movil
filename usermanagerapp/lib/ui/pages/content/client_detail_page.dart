@@ -17,14 +17,15 @@ class _ClientDetailPageState extends State<ClientDetailPage> {
   final controllerName = TextEditingController();
   final controllerId = TextEditingController();
 
-    @override
-    void initState() {
-      super.initState();
-      client = Get.arguments[0]; // Inicializar us con los argumentos de Get.arguments
-      controllerName.text = client.name;
-      controllerId.text = client.id;
+  @override
+  void initState() {
+    super.initState();
+    client =
+        Get.arguments[0]; // Inicializar us con los argumentos de Get.arguments
+    controllerName.text = client.name;
+    controllerId.text = client.id;
   }
-  
+
   @override
   Widget build(BuildContext context) {
     ClientController clientController = Get.find();
@@ -35,12 +36,14 @@ class _ClientDetailPageState extends State<ClientDetailPage> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Get.off(() => HomePageUC(
-              key: const Key('HomePageUC'), loggedEmail: '', loggedPassword: '',
-            ));
+            Get.to(() => HomePageUC(
+                  key: const Key('HomePageUC'),
+                  loggedEmail: '',
+                  loggedPassword: '',
+                ));
           },
         ),
-        title: Text(client.name), 
+        title: Text(client.name),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -79,9 +82,11 @@ class _ClientDetailPageState extends State<ClientDetailPage> {
                             clientM.name = controllerName.text;
                             clientM.id = controllerId.text;
                             await clientController.updateClient(clientM);
-                             Get.off(() => HomePageUC(
-                      key: const Key('HomePageUC'), loggedEmail: '', loggedPassword: '',
-                    ));
+                            Get.to(() => HomePageUC(
+                                  key: const Key('HomePageUC'),
+                                  loggedEmail: '',
+                                  loggedPassword: '',
+                                ));
                           },
                           child: const Text("Save")))
                 ],

@@ -29,9 +29,11 @@ class _CreateUSState extends State<CreateUS> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Get.off(() => HomePageUC(
-              key: const Key('HomePageUC'), loggedEmail: '', loggedPassword: '',
-            ));
+            Get.to(() => HomePageUC(
+                  key: const Key('HomePageUC'),
+                  loggedEmail: '',
+                  loggedPassword: '',
+                ));
           },
         ),
         title: Text("Create new support account"),
@@ -112,11 +114,18 @@ class _CreateUSState extends State<CreateUS> {
                 OutlinedButton(
                     key: const Key('ButtonSignUpSubmit'),
                     onPressed: () async {
-                            US us = US(id: idcontroller.text, name: namecontroller.text, email: emailcontroller.text, password: passwordcontroller.text, reportquantity: 0);
-                            await usController.addUS(us);
-                        Get.off(()=>HomePageUC(
-                            key: const Key('HomePageUC'), loggedEmail: '', loggedPassword: '',)
-                            );
+                      US us = US(
+                          id: idcontroller.text,
+                          name: namecontroller.text,
+                          email: emailcontroller.text,
+                          password: passwordcontroller.text,
+                          reportquantity: 0);
+                      await usController.addUS(us);
+                      Get.to(() => HomePageUC(
+                            key: const Key('HomePageUC'),
+                            loggedEmail: '',
+                            loggedPassword: '',
+                          ));
                     },
                     child: const Text("Submit")),
               ],

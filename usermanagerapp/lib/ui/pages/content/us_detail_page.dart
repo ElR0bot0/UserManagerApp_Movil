@@ -23,7 +23,8 @@ class _USDetailPageState extends State<USDetailPage> {
   @override
   void initState() {
     super.initState();
-    us = Get.arguments[0] as US; // Inicializar us con los argumentos de Get.arguments
+    us = Get.arguments[0]
+        as US; // Inicializar us con los argumentos de Get.arguments
     controllerName.text = us.name;
     controllerId.text = us.id;
     controlleremail.text = us.email;
@@ -38,9 +39,11 @@ class _USDetailPageState extends State<USDetailPage> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Get.off(() => HomePageUC(
-              key: const Key('HomePageUC'), loggedEmail: '', loggedPassword: '',
-            ));
+            Get.to(() => HomePageUC(
+                  key: const Key('HomePageUC'),
+                  loggedEmail: '',
+                  loggedPassword: '',
+                ));
           },
         ),
         title: Text(us.name), // Ahora us.name debería funcionar correctamente
@@ -105,9 +108,11 @@ class _USDetailPageState extends State<USDetailPage> {
                         usM.email = controlleremail.text;
                         usM.password = controllerpassword.text;
                         await usController.updateUS(usM);
-                        Get.off(() => HomePageUC(
-                          key: const Key('HomePageUC'), loggedEmail: '', loggedPassword: '',
-                        ));
+                        Get.to(() => HomePageUC(
+                              key: const Key('HomePageUC'),
+                              loggedEmail: '',
+                              loggedPassword: '',
+                            ));
                       },
                       child: const Text("Save"),
                     ),

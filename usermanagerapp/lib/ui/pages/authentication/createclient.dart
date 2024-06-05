@@ -22,13 +22,16 @@ class _CreateClientPageState extends State<CreateClient> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-       appBar: AppBar(
+      appBar: AppBar(
         leading: IconButton(
+          key: const Key('BackButton'),
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Get.off(() => HomePageUC(
-              key: const Key('HomePageUC'), loggedEmail: '', loggedPassword: '',
-            ));
+            Get.to(() => HomePageUC(
+                  key: const Key('HomePageUC'),
+                  loggedEmail: '',
+                  loggedPassword: '',
+                ));
           },
         ),
         title: Text("Create new client account"),
@@ -77,11 +80,14 @@ class _CreateClientPageState extends State<CreateClient> {
                 OutlinedButton(
                     key: const Key('ButtonSignUpSubmit'),
                     onPressed: () async {
-                            Client client = Client(id: idcontroller.text, name: namecontroller.text);
-                            await clientController.addClient(client);
-                        Get.off(()=>HomePageUC(
-                            key: const Key('HomePageUC'), loggedEmail: '', loggedPassword: '',)
-                            );
+                      Client client = Client(
+                          id: idcontroller.text, name: namecontroller.text);
+                      await clientController.addClient(client);
+                      Get.to(() => HomePageUC(
+                            key: const Key('HomePageUC'),
+                            loggedEmail: '',
+                            loggedPassword: '',
+                          ));
                     },
                     child: const Text("Submit")),
               ],

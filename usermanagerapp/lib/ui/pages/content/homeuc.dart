@@ -37,7 +37,7 @@ class _HomePageUCState extends State<HomePageUC> {
     selectedList = 'Support users';
   }
 
-    TextEditingController clientIdController = TextEditingController();
+  TextEditingController clientIdController = TextEditingController();
   TextEditingController usIdController = TextEditingController();
 
   List<Report> getFilteredReports() {
@@ -49,7 +49,8 @@ class _HomePageUCState extends State<HomePageUC> {
     String usId = usIdController.text;
 
     return reportController.reports.where((report) {
-      bool matchesClientId = clientId.isEmpty || report.clientid.toString() == clientId;
+      bool matchesClientId =
+          clientId.isEmpty || report.clientid.toString() == clientId;
       bool matchesUsId = usId.isEmpty || report.usid.toString() == usId;
       return matchesClientId && matchesUsId;
     }).toList();
@@ -85,7 +86,9 @@ class _HomePageUCState extends State<HomePageUC> {
                 },
                 child: Text('Clients'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: selectedList == 'Clients' ? Color(0xFFF7F2F9) : Colors.grey,
+                  backgroundColor: selectedList == 'Clients'
+                      ? Color(0xFFF7F2F9)
+                      : Colors.grey,
                 ),
               ),
               SizedBox(width: 10),
@@ -97,7 +100,9 @@ class _HomePageUCState extends State<HomePageUC> {
                 },
                 child: Text('Reports'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: selectedList == 'Reports' ? Color(0xFFF7F2F9) : Colors.grey,
+                  backgroundColor: selectedList == 'Reports'
+                      ? Color(0xFFF7F2F9)
+                      : Colors.grey,
                 ),
               ),
             ],
@@ -105,7 +110,7 @@ class _HomePageUCState extends State<HomePageUC> {
           IconButton(
             key: const Key('ButtonHomeLogOff'),
             onPressed: () {
-              Get.off(
+              Get.to(
                 () => LoginScreen(
                   key: const Key('LoginScreen'),
                   email: widget.loggedEmail,
@@ -130,7 +135,7 @@ class _HomePageUCState extends State<HomePageUC> {
             label: 'Client',
             labelStyle: TextStyle(fontSize: 18.0),
             onTap: () {
-              Get.off(
+              Get.to(
                 () => CreateClient(
                   key: const Key('CreateClient'),
                 ),
@@ -143,7 +148,7 @@ class _HomePageUCState extends State<HomePageUC> {
             label: 'Support user',
             labelStyle: TextStyle(fontSize: 18.0),
             onTap: () {
-              Get.off(
+              Get.to(
                 () => CreateUS(
                   key: const Key('CreateUS'),
                 ),
@@ -191,7 +196,7 @@ class _HomePageUCState extends State<HomePageUC> {
     );
   }
 
- Widget _getXlistView3() {
+  Widget _getXlistView3() {
     return Column(
       children: [
         Row(

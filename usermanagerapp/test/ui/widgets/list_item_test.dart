@@ -70,7 +70,7 @@ void main() {
       'ListItem navigates to ClientDetailPage when Edit button is pressed',
       (WidgetTester tester) async {
     await tester.pumpWidget(
-      MaterialApp(
+      GetMaterialApp(
         home: ListItem(client),
       ),
     );

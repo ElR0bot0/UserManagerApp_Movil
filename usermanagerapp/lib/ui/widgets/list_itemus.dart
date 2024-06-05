@@ -16,10 +16,11 @@ class ListItemUS extends StatelessWidget {
     logInfo("ListItem for us " + us.name.toString());
     USController usController = Get.find();
     String id = us.id;
-    String desc = "Support User | # of Reports: " + us.reportquantity.toString();
-if (us.ratings != null) {
-  desc = desc + " | Avg Rating: " + us.avgrating.toStringAsFixed(1) + " ";
-}
+    String desc =
+        "Support User | # of Reports: " + us.reportquantity.toString();
+    if (us.ratings != null) {
+      desc = desc + " | Avg Rating: " + us.avgrating.toStringAsFixed(1) + " ";
+    }
     return Center(
       child: Dismissible(
         key: UniqueKey(),
@@ -55,14 +56,17 @@ if (us.ratings != null) {
                       children: [
                         TextSpan(
                           text: desc,
-                          style: TextStyle(color: Colors.black), // Establece el estilo del texto
+                          style: TextStyle(
+                              color: Colors
+                                  .black), // Establece el estilo del texto
                         ),
                         if (us.ratings != null)
                           WidgetSpan(
                             child: Icon(
                               Icons.star,
                               color: Colors.yellow,
-                              size: 20, // Ajusta el tamaño del ícono según lo necesites
+                              size:
+                                  20, // Ajusta el tamaño del ícono según lo necesites
                             ), // Muestra el ícono de la estrella
                           ),
                       ],
@@ -70,19 +74,19 @@ if (us.ratings != null) {
                   ),
                 ),
               ),
-                            TextButton(
+              TextButton(
                 onPressed: () {
-                  Get.off(() => USReports(
-                key: const Key('USReports'), selectedUS: us,
-              ));
+                  Get.to(() => USReports(
+                        key: const Key('USReports'),
+                        selectedUS: us,
+                      ));
                 },
                 child: const Text("Reports"),
               ),
               TextButton(
                 onPressed: () {
-                  Get.off(() => USDetailPage(
-                key: const Key('USDetailPage')
-              ), arguments: [us, us.id]);
+                  Get.to(() => USDetailPage(key: const Key('USDetailPage')),
+                      arguments: [us, us.id]);
                 },
                 child: const Text("Edit"),
               )

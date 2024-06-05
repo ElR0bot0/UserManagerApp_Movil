@@ -86,33 +86,36 @@ class _LoginScreenState extends State<LoginScreen> {
                 OutlinedButton(
                   key: const Key('ButtonLoginSubmit'),
                   onPressed: () async {
-                    bool isuc = await ucController.authenticateUC(_emailController.text, _passwordController.text);
-                    bool isus = await usController.authenticateUS(_emailController.text, _passwordController.text);
+                    bool isuc = await ucController.authenticateUC(
+                        _emailController.text, _passwordController.text);
+                    bool isus = await usController.authenticateUS(
+                        _emailController.text, _passwordController.text);
                     if (isuc) {
                       Get.offAll(() => HomePageUC(
-                        key: const Key('HomePageUC'),
-                        loggedEmail: _emailController.text,
-                        loggedPassword: _passwordController.text,
-                      ));
+                            key: const Key('HomePageUC'),
+                            loggedEmail: _emailController.text,
+                            loggedPassword: _passwordController.text,
+                          ));
                     } else {
-                      if(isus){                       
-                        try{
+                      if (isus) {
+                        try {
                           int count = 0;
                           int queue = await reportController.getPendingCount();
-                          if (queue > 0){
+                          if (queue > 0) {
                             count = queue;
                             await usController.getAllUSs();
                           }
                           Get.offAll(() => HomePageUS(
-                          key: const Key('HomePageUS'),
-                          loggedEmail: _emailController.text,
-                          loggedPassword: _passwordController.text,
-                          que: count,
-                        ));
+                                key: const Key('HomePageUS'),
+                                loggedEmail: _emailController.text,
+                                loggedPassword: _passwordController.text,
+                                que: count,
+                              ));
                         } catch (e) {
                           print(e);
                         }
-                      } else { // Mostrar un mensaje de error al usuario
+                      } else {
+                        // Mostrar un mensaje de error al usuario
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text('Wrong email or password'),

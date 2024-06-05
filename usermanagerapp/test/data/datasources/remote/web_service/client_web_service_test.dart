@@ -14,7 +14,7 @@ void main() {
     httpClient = http.Client();
     dataSource = ClientRemoteDataSource(client: httpClient);
     newClient = Client(
-      id: '5',
+      id: '0',
       name: 'Test Client',
     );
   });

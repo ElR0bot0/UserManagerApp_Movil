@@ -116,7 +116,7 @@ class _HomePageUSState extends State<HomePageUS> {
           IconButton(
             key: const Key('ButtonHomeLogOff'),
             onPressed: () {
-              Get.off(() => LoginScreen(
+              Get.to(() => LoginScreen(
                     key: const Key('LoginScreen'),
                     email: widget.loggedEmail,
                     password: widget.loggedPassword,
