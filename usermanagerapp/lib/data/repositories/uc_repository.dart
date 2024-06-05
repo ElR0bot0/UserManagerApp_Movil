@@ -1,14 +1,11 @@
-import 'package:loggy/loggy.dart';
+import 'package:f_testing_template/data/datasources/remote/i_uc_remote_datasource.dart';
+
 import '../../domain/repositories/iucrepository.dart';
-import '../datasources/remote/uc_remote_datasource.dart';
 
 class UCRepository implements IUCRepository {
-  late UCRemoteDatasource _ucDatatasource;
+  final IUCRemoteDatasource _ucDatatasource;
 
-  UCRepository() {
-    logInfo("Starting UCRepository");
-    _ucDatatasource = UCRemoteDatasource();
-  }
+  UCRepository(this._ucDatatasource);
 
   @override
   Future<bool> authenticateUC(String email, String password) async {

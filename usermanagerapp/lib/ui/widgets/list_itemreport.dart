@@ -33,11 +33,21 @@ class ListItemReport extends StatelessWidget {
             )),
         onDismissed: (direction) async {
   try {
-    // Remove the item from the data source.
-    await reportController.deleteReport(report.id.toString());
     var currentus = usController.uss.firstWhere((us) => us.id == report.usid.toString());
+    if (report.rating > 0) {
+      currentus.ratings?.remove(report.rating);
+    }
     currentus.reportquantity--;
+                        int suma = 0;
+                    if (currentus.ratings != null) {
+                      for (int ratingg in currentus.ratings!) {
+                        suma += ratingg;
+                      }
+                    }
+                    double avg = suma / (currentus.ratings?.length ?? 1);
+                    currentus.avgrating = avg;
     await usController.updateUS(currentus);
+    await reportController.deleteReport(report.id.toString());
   } catch (error) {
     print('Error deleting report: $error');
   }

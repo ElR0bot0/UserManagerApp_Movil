@@ -1,19 +1,21 @@
-import 'package:get/get.dart';
-
-import '../../data/repositories/report_repository.dart';
+import 'package:f_testing_template/domain/repositories/ireportrepository.dart';
 import '../entities/report.dart';
 
 class Reportss {
-  final ReportRepository _repository = Get.find();
-  Reportss(find);
+  final IReportRepository _repository;
 
-  Future<void> addReport(reporti, status) async => await _repository.addReport(reporti, status);
+  Reportss(this._repository);
 
-  Future<List<Report>> getAllReports() async => await _repository.getAllReports();
+  Future<bool> addReport(reporti, status) async =>
+      await _repository.addReport(reporti, status);
 
-  Future<void> deleteReport(id) async => await _repository.deleteReport(id);
+  Future<List<Report>> getAllReports() async =>
+      await _repository.getAllReports();
 
-  Future<void> rateReport(reporti) async => await _repository.rateReport(reporti);
+  Future<bool> deleteReport(id) async => await _repository.deleteReport(id);
+
+  Future<bool> rateReport(reporti) async =>
+      await _repository.rateReport(reporti);
 
   Future<int> getPendingCount() async => await _repository.getPendingCount();
 }

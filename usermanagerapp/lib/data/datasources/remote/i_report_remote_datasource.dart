@@ -1,10 +1,10 @@
 import '../../../domain/entities/report.dart';
 
 abstract class IReportRemoteDataSource {
-  Future<void> addReport(Report report, int status);
+  Future<bool> addReport(Report report, int status);
   Future<List<Report>> getAllReports();
-  Future<void> deleteReport(String id);
-  Future<void> rateReport(Report report);
+  Future<bool> deleteReport(String id);
+  Future<bool> rateReport(Report report);
   Future<void> savePendingRecord(Report report);
   Future<void> uploadToApi(Report report);
   Future<void> uploadPendingRecords(Report a);
