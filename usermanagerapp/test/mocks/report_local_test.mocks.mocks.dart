@@ -91,6 +91,15 @@ class MockIReportDataSource extends _i1.Mock implements _i3.IReportDataSource {
         ),
         returnValue: _i4.Future<int>.value(0),
       ) as _i4.Future<int>);
+
+  @override
+  _i4.Future<int> getPendingCount() => (super.noSuchMethod(
+        Invocation.method(
+          #getPendingCount,
+          [],
+        ),
+        returnValue: _i4.Future<int>.value(0),
+      ) as _i4.Future<int>);
 }
 
 /// A class which mocks [Client].

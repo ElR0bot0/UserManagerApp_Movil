@@ -123,10 +123,10 @@ class MockIReportRemoteDataSource extends _i1.Mock
       ) as _i4.Future<void>);
 
   @override
-  _i4.Future<void> uploadPendingRecords() => (super.noSuchMethod(
+  _i4.Future<void> uploadPendingRecords(_i5.Report? a) => (super.noSuchMethod(
         Invocation.method(
           #uploadPendingRecords,
-          [],
+          [a],
         ),
         returnValue: _i4.Future<void>.value(),
         returnValueForMissingStub: _i4.Future<void>.value(),
@@ -183,6 +183,15 @@ class MockIReportRepository extends _i1.Mock implements _i6.IReportRepository {
         ),
         returnValue: _i4.Future<bool>.value(false),
       ) as _i4.Future<bool>);
+
+  @override
+  _i4.Future<int> getPendingCount() => (super.noSuchMethod(
+        Invocation.method(
+          #getPendingCount,
+          [],
+        ),
+        returnValue: _i4.Future<int>.value(0),
+      ) as _i4.Future<int>);
 }
 
 /// A class which mocks [Client].
