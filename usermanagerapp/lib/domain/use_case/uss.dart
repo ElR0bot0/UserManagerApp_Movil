@@ -1,21 +1,20 @@
-import 'package:get/get.dart';
-
-import '../../data/repositories/us_repository.dart';
+import 'package:f_testing_template/domain/repositories/iusrepository.dart';
 import '../entities/us.dart';
 
 class USs {
-  final USRepository _repository = Get.find();
-  USs(find);
+  final IUSRepository _repository;
+  USs(this._repository);
 
-  Future<void> addUS(usi) async => await _repository.addUS(usi);
+  Future<bool> addUS(usi) async => await _repository.addUS(usi);
 
   Future<List<US>> getAllUSs() async => await _repository.getAllUSs();
 
-  Future<void> deleteUS(id) async => await _repository.deleteUS(id);
+  Future<bool> deleteUS(id) async => await _repository.deleteUS(id);
 
-  Future<void> updateUS(usi) async => await _repository.updateUS(usi);
+  Future<bool> updateUS(usi) async => await _repository.updateUS(usi);
 
-  Future<bool> authenticateUS(String email, String password) async => await _repository.authenticateUS(email, password);
+  Future<bool> authenticateUS(String email, String password) async =>
+      await _repository.authenticateUS(email, password);
 
   Future<US?> getUSById(String id) async {
     try {
@@ -34,5 +33,4 @@ class USs {
       return null;
     }
   }
-
 }

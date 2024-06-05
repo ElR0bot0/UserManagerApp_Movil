@@ -1,21 +1,16 @@
+import 'package:f_testing_template/data/datasources/remote/i_client_remote_datasource.dart';
 import 'package:loggy/loggy.dart';
 import '../../domain/entities/client.dart';
 import '../../domain/repositories/iclientrepository.dart';
-import '../datasources/remote/client_remote_datasource.dart';
 
 class ClientRepository implements IClientRepository {
-  late ClientRemoteDataSource _clientDatasource;
-
-  ClientRepository() {
-    logInfo("Starting ClientRepository");
-    _clientDatasource = ClientRemoteDataSource();
-  }
+  final IClientRemoteDataSource _clientDatasource;
+  ClientRepository(this._clientDatasource);
 
   @override
   Future<bool> addClient(Client client) async {
     try {
-      await _clientDatasource.addClient(client);
-      return true;
+      return await _clientDatasource.addClient(client);
     } catch (error) {
       logError('Error adding Client in repository: $error');
       return false;
@@ -33,20 +28,22 @@ class ClientRepository implements IClientRepository {
   }
 
   @override
-  Future<void> deleteClient(String id) async {
+  Future<bool> deleteClient(String id) async {
     try {
-      await _clientDatasource.deleteClient(id);
+      return await _clientDatasource.deleteClient(id);
     } catch (error) {
       logError('Error deleting Client in repository: $error');
+      return false;
     }
   }
 
   @override
-  Future<void> updateClient(Client client) async {
+  Future<bool> updateClient(Client client) async {
     try {
-      await _clientDatasource.updateClient(client);
+      return await _clientDatasource.updateClient(client);
     } catch (error) {
       logError('Error updating Client in repository: $error');
+      return false;
     }
   }
 

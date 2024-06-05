@@ -2,22 +2,18 @@ import 'package:loggy/loggy.dart';
 import '../../domain/entities/report.dart';
 import '../../domain/repositories/ireportrepository.dart';
 import '../datasources/local/report_local_datasource.dart';
-import '../datasources/remote/report_remote_datasource.dart';
+import '../datasources/remote/i_report_remote_datasource.dart';
 
 class ReportRepository implements IReportRepository {
-  late ReportRemoteDataSource _reportDatasource;
+  final IReportRemoteDataSource _reportDatasource;
   late DatabaseHelper report_local_datasource;
 
-  ReportRepository() {
-    logInfo("Starting ReportRepository");
-    _reportDatasource = ReportRemoteDataSource();
-  }
+  ReportRepository(this._reportDatasource);
 
   @override
   Future<bool> addReport(Report report, int status) async {
     try {
-      await _reportDatasource.addReport(report, status);
-      return true;
+      return await _reportDatasource.addReport(report, status);
     } catch (error) {
       logError('Error adding Report in repository: $error');
       return false;
@@ -35,24 +31,26 @@ class ReportRepository implements IReportRepository {
   }
 
   @override
-  Future<void> deleteReport(String id) async {
+  Future<bool> deleteReport(String id) async {
     try {
-      await _reportDatasource.deleteReport(id);
+      return await _reportDatasource.deleteReport(id);
     } catch (error) {
       logError('Error deleting Report in repository: $error');
+      return false;
     }
   }
 
   @override
-  Future<void> rateReport(Report report) async {
+  Future<bool> rateReport(Report report) async {
     try {
-      await _reportDatasource.rateReport(report);
+      return await _reportDatasource.rateReport(report);
     } catch (error) {
       logError('Error updating Report in repository: $error');
+      return false;
     }
   }
 
-    @override
+  @override
   Future<int> getPendingCount() async {
     try {
       int count = await report_local_datasource.getPendingCount();

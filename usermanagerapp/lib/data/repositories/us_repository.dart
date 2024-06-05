@@ -1,21 +1,17 @@
+import 'package:f_testing_template/data/datasources/remote/i_us_remote_datasource.dart';
 import 'package:loggy/loggy.dart';
 import '../../domain/entities/us.dart';
 import '../../domain/repositories/iusrepository.dart';
-import '../datasources/remote/us_remote_datasource.dart';
 
 class USRepository implements IUSRepository {
-  late USRemoteDataSource _uSDatatasource;
+  final IUSRemoteDataSource _uSDatatasource;
 
-  USRepository() {
-    logInfo("Starting USRepository");
-    _uSDatatasource = USRemoteDataSource();
-  }
+  USRepository(this._uSDatatasource);
 
   @override
   Future<bool> addUS(US usi) async {
     try {
-      await _uSDatatasource.addUS(usi);
-      return true;
+      return await _uSDatatasource.addUS(usi);
     } catch (error) {
       logError('Error adding US in repository: $error');
       return false;
@@ -34,20 +30,22 @@ class USRepository implements IUSRepository {
   }
 
   @override
-  Future<void> deleteUS(String id) async {
+  Future<bool> deleteUS(String id) async {
     try {
-      await _uSDatatasource.deleteUS(id);
+      return await _uSDatatasource.deleteUS(id);
     } catch (error) {
       logError('Error deleting US in repository: $error');
+      return false;
     }
   }
 
   @override
-  Future<void> updateUS(US uss) async {
+  Future<bool> updateUS(US uss) async {
     try {
-      await _uSDatatasource.updateUS(uss);
+      return await _uSDatatasource.updateUS(uss);
     } catch (error) {
       logError('Error updating US in repository: $error');
+      return false;
     }
   }
 
