@@ -281,7 +281,7 @@ class _HomePageUSState extends State<HomePageUS> {
                           }
                         },
                         child: Text(selectedDate != null
-                            ? 'Selected Date: ${selectedDate!.toLocal().toString().split(' ')[0]}'
+                            ? 'Select Date'
                             : 'Select Date'),
                       ),
                       SizedBox(height: 10), // Additional space
@@ -297,7 +297,7 @@ class _HomePageUSState extends State<HomePageUS> {
                           }
                         },
                         child: Text(selectedTime != null
-                            ? 'Selected Time: ${selectedTime!.format(context)}'
+                            ? 'Select Time'
                             : 'Select Time'),
                       ),
                     ],
